@@ -11,10 +11,10 @@ export default function ProtectedLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="min-h-screen flex flex-col items-center bg-background">
+    <main className="min-h-screen flex flex-col items-center">
       <div className="flex-1 w-full flex flex-col items-center">
         {/* Header Modificado */}
-        <nav className="w-full flex justify-center border-b border-b-border h-16 bg-card">
+        <nav className="w-full flex justify-center border-b border-b-border h-16 bg-card/80 backdrop-blur-md">
           <div className="w-full max-w-7xl flex justify-between items-center p-3 px-5 text-sm">
             {/* Marca BluePOS */}
             <div className="flex flex-col">
