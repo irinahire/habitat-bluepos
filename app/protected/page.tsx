@@ -1,42 +1,44 @@
 import { redirect } from "next/navigation";
-
 import { createClient } from "@/lib/supabase/server";
-import { InfoIcon } from "lucide-react";
-import { FetchDataSteps } from "@/components/tutorial/fetch-data-steps";
-import { Suspense } from "react";
 
-async function UserDetails() {
+export default async function ProtectedPage() {
   const supabase = await createClient();
-  const { data, error } = await supabase.auth.getClaims();
+  const { data, error } = await supabase.auth.getUser();
 
-  if (error || !data?.claims) {
-    redirect("/auth/login");
+  if (error || !data?.user) {
+    return redirect("/auth/login");
   }
 
-  return JSON.stringify(data.claims, null, 2);
-}
-
-export default function ProtectedPage() {
   return (
-    <div className="flex-1 w-full flex flex-col gap-12">
-      <div className="w-full">
-        <div className="bg-accent text-sm p-3 px-5 rounded-md text-foreground flex gap-3 items-center">
-          <InfoIcon size="16" strokeWidth={2} />
-          This is a protected page that you can only see as an authenticated
-          user
+    <div className="flex flex-col h-full gap-6 p-6">
+      {/* HEADER DE GESTION */}
+      <header className="flex justify-between items-center bg-card p-4 rounded-xl border border-border">
+        <h1 className="text-2xl font-bold">Sales & Billing</h1>
+      </header>
+
+      {/* GRILLA PRINCIPAL */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1">
+        
+        {/* COLUMNA IZQUIERDA */}
+        <div className="flex flex-col gap-6">
+          <section className="bg-card p-6 rounded-2xl border border-border h-[400px]">
+            <h2 className="text-xl font-bold mb-4">Product/Medication Search</h2>
+            {/* Aquí irán los items */}
+          </section>
+          <section className="bg-card p-6 rounded-2xl border border-border flex-1">
+            <h2 className="text-xl font-bold mb-4">Recent Transactions</h2>
+          </section>
         </div>
-      </div>
-      <div className="flex flex-col gap-2 items-start">
-        <h2 className="font-bold text-2xl mb-4">Your user details</h2>
-        <pre className="text-xs font-mono p-3 rounded border max-h-32 overflow-auto">
-          <Suspense>
-            <UserDetails />
-          </Suspense>
-        </pre>
-      </div>
-      <div>
-        <h2 className="font-bold text-2xl mb-4">Next steps</h2>
-        <FetchDataSteps />
+
+        {/* COLUMNA DERECHA */}
+        <div className="flex flex-col gap-6">
+          <section className="bg-card p-6 rounded-2xl border border-border h-[300px]">
+            <h2 className="text-xl font-bold mb-4">Patient/Customer</h2>
+          </section>
+          <section className="bg-card p-6 rounded-2xl border border-border flex-1">
+            <h2 className="text-xl font-bold mb-4">Current Bill</h2>
+          </section>
+        </div>
       </div>
     </div>
   );
