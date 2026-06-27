@@ -31,6 +31,7 @@
   * {
     @apply border-border;
   }
+  
   body {
     /* Degradado premium fucsia a turquesa */
     background: linear-gradient(135deg, #4c1d95 0%, #0f172a 50%, #0d9488 100%);
