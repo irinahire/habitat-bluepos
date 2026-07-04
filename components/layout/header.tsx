@@ -4,7 +4,6 @@ import { useHabitat } from "@/domain/habitatcontext";
 import Link from "next/link";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { Suspense } from "react";
-// Importación real del componente de Auth que tenías en tu código original
 import { AuthButton } from "@/components/auth-button"; 
 
 export function Header() {
@@ -45,7 +44,6 @@ export function Header() {
           </button>
         )}
         <ThemeSwitcher />
-        {/* Logueo real que me pasaste */}
         <Suspense>
           <AuthButton />
         </Suspense>
