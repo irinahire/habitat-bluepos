@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { InfoIcon } from "lucide-react";
 import { FetchDataSteps } from "@/components/tutorial/fetch-data-steps";
 import { Suspense } from "react";
+import { HabitatBrowser } from "@/components/habitat-browser";
 
 // Mantenemos esta función tal cual para no romper la lógica interna
 async function UserDetails() {
