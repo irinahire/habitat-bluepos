@@ -33,7 +33,7 @@ export function Header() {
         </button>
       </div>
 
-      {/* Acciones (Vender, Sesión y Tema) */}
+      {/* Acciones */}
       <div className="flex items-center gap-4">
         {activeView !== 'billing' && (
           <button 
@@ -44,9 +44,13 @@ export function Header() {
           </button>
         )}
         <ThemeSwitcher />
-        <Suspense>
-          <AuthButton />
-        </Suspense>
+        
+        {/* Aquí está la clave: renderizado condicional con Suspense */}
+        <div className="flex items-center">
+            <Suspense fallback={<div className="w-20 h-8 animate-pulse bg-secondary rounded" />}>
+              <AuthButton />
+            </Suspense>
+        </div>
       </div>
     </header>
   );
