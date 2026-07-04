@@ -28,20 +28,26 @@ export default function ProtectedPage() {
         {/* COLUMNA IZQUIERDA */}
         <div className="flex flex-col gap-6">
           {/* Arriba Izquierda: Buscador */}
+
+          
           <section className="bg-card p-6 rounded-3xl border border-white/10 min-h-[350px] shadow-2xl">
-            <h2 className="text-xl font-bold mb-4 flex justify-between items-center">
-              Product/Medication Search
-              <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full uppercase">Módulo activo</span>
-            </h2>
-            <div className="relative">
-               <input className="w-full bg-background border border-white/10 rounded-xl p-3 text-sm" placeholder="Escanea o busca un producto..." />
-            </div>
-            <div className="mt-6 grid grid-cols-3 gap-4 opacity-20 italic text-xs">
-               <div className="bg-background aspect-square rounded-xl border border-dashed border-white/10 flex items-center justify-center">Producto A</div>
-               <div className="bg-background aspect-square rounded-xl border border-dashed border-white/10 flex items-center justify-center">Producto B</div>
-               <div className="bg-background aspect-square rounded-xl border border-dashed border-white/10 flex items-center justify-center">Producto C</div>
-            </div>
-          </section>
+  <h2 className="text-xl font-bold mb-4 flex justify-between items-center">
+    Product/Medication Search
+    <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full uppercase">Módulo activo</span>
+  </h2>
+  
+  {/* AQUÍ VA EL CAMBIO */}
+  <div className="relative">
+    <HabitatBrowser />
+  </div>
+
+  <div className="mt-6 grid grid-cols-3 gap-4 opacity-20 italic text-xs">
+     <div className="bg-background aspect-square rounded-xl border border-dashed border-white/10 flex items-center justify-center">Producto A</div>
+     <div className="bg-background aspect-square rounded-xl border border-dashed border-white/10 flex items-center justify-center">Producto B</div>
+     <div className="bg-background aspect-square rounded-xl border border-dashed border-white/10 flex items-center justify-center">Producto C</div>
+  </div>
+</section>
+          
 
           {/* Abajo Izquierda: Transacciones */}
           <section className="bg-card p-6 rounded-3xl border border-white/10 flex-1 shadow-2xl">
