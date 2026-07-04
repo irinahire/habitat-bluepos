@@ -1,21 +1,35 @@
-// domain/menurubro.ts
-import { LayoutGrid, UtensilsCrossed, ClipboardList, Users, LibraryBig, LucideIcon } from "lucide-react";
+import { 
+  LayoutGrid, 
+  UtensilsCrossed, 
+  ClipboardList, 
+  Users, 
+  LibraryBig, 
+  LucideIcon, 
+  Pill, 
+  Stethoscope, 
+  Activity 
+} from "lucide-react";
 
-export type MenuItem = {
+export type menuitem = {
   label: string;
   icon: LucideIcon;
   action: string;
 };
 
-export const MENU_CONFIG: Record<string, MenuItem[]> = {
+export const menurubro: Record<string, menuitem[]> = {
   restaurantview: [
-    { label: "Mesas", icon: LayoutGrid, action: "tables" },
-    { label: "Comanda", icon: UtensilsCrossed, action: "orders" },
-    { label: "Cocina", icon: ClipboardList, action: "kitchen" },
+    { label: "mesas", icon: LayoutGrid, action: "tables" },
+    { label: "comanda", icon: UtensilsCrossed, action: "orders" },
+    { label: "cocina", icon: ClipboardList, action: "kitchen" },
   ],
   libraryview: [
-    { label: "Catálogo", icon: LibraryBig, action: "catalog" },
-    { label: "Préstamos", icon: ClipboardList, action: "loans" },
-    { label: "Socios", icon: Users, action: "members" },
+    { label: "catalogo", icon: LibraryBig, action: "catalog" },
+    { label: "prestamos", icon: ClipboardList, action: "loans" },
+    { label: "socios", icon: Users, action: "members" },
+  ],
+  farmaview: [
+    { label: "medicamentos", icon: Pill, action: "medicines" },
+    { label: "pacientes", icon: Stethoscope, action: "patients" },
+    { label: "historial", icon: Activity, action: "history" },
   ],
 };
