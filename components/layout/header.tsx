@@ -1,5 +1,6 @@
 "use client";
 
+
 import { useHabitat } from "@/domain/habitatcontext";
 import Link from "next/link";
 import { ThemeSwitcher } from "@/components/theme-switcher";
