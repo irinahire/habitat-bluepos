@@ -20,12 +20,17 @@ export const habitatService = {
     return data;
   },
 
-  // Traer hijos de un nodo
-  async getChildren(parentId: string): Promise<HabitatNode[]> {
-    const { data, error } = await supabase
-      .from('habitat')
-      .select('*')
-      .eq('parent_id', parentId);
+  // Traer hijos de un nodo (o nodos raíz si parentId es null)
+  async getChildren(parentId: string | null): Promise<HabitatNode[]> {
+    let query = supabase.from('habitat').select('*');
+
+    if (parentId === null) {
+      query = query.is('parent_id', null);
+    } else {
+      query = query.eq('parent_id', parentId);
+    }
+
+    const { data, error } = await query;
     
     if (error) {
       console.error('Error en getChildren:', error);
