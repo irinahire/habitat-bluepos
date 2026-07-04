@@ -23,7 +23,10 @@ export function Header() {
         <span className="text-[10px] text-muted-foreground uppercase tracking-wider">Blueprint Lab</span>
       </div>
 
-      {/* Selector de Rubros (Dropdown que reemplaza los botones largos) */}
+      {/* ThemeSwitcher movido a la izquierda */}
+      <ThemeSwitcher />
+
+      {/* Selector de Rubros */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="secondary" className="gap-2">
@@ -42,17 +45,16 @@ export function Header() {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {/* Espacio vacío para empujar las acciones a la derecha */}
+      {/* Espacio vacío para empujar las acciones restantes a la derecha */}
       <div className="flex-1" />
 
-      {/* Acciones */}
+      {/* Acciones (VENDER queda a la derecha, lejos de la burbuja de login) */}
       <div className="flex items-center gap-4">
         {activeView !== 'billing' && (
           <Button onClick={() => setActiveView('billing')} className="font-bold">
             VENDER
           </Button>
         )}
-        <ThemeSwitcher />
       </div>
     </header>
   );
