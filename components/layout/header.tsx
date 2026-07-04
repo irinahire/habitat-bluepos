@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useHabitat } from "@/domain/habitatcontext";
 import Link from "next/link";
 import { ThemeSwitcher } from "@/components/theme-switcher";
@@ -11,13 +10,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, Store, BookOpen, Pill } from "lucide-react"; // Agregamos Pill
+import { ChevronDown, Store, BookOpen, Pill } from "lucide-react";
 import { menurubro } from "@/domain/menurubro";
 
 export function Header() {
   const { activeView, setActiveView, setActiveModule, activeModule } = useHabitat();
 
-  // Función auxiliar para obtener el ícono del rubro activo en el trigger
+  // Función segura para obtener el ícono del trigger
   const getIconForModule = (module: string) => {
     switch (module) {
       case 'restaurantview': return <Store className="size-4" />;
@@ -41,8 +40,8 @@ export function Header() {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="secondary" className="gap-2 capitalize">
-            {getIconForModule(activeModule)}
-            {activeModule.replace('view', '')}
+            {getIconForModule(activeModule || 'restaurantview')}
+            {activeModule ? activeModule.replace('view', '') : 'seleccionar'}
             <ChevronDown className="size-4 opacity-50" />
           </Button>
         </DropdownMenuTrigger>
@@ -61,7 +60,7 @@ export function Header() {
 
       {/* menu contextual dinámico */}
       <div className="flex items-center gap-2 border-l pl-6 border-border/50">
-        {menurubro[activeModule]?.map((item) => (
+        {activeModule && menurubro[activeModule]?.map((item) => (
           <Button key={item.label} variant="ghost" size="sm" className="gap-2 text-xs capitalize">
             <item.icon className="size-3" /> {item.label}
           </Button>
