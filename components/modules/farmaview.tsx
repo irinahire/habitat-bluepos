@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { farmaService } from "@/services/farmaService";
+import { farmaService } from "@/domain/farmaService";
 
 export function Farmaview() {
   const [cart, setCart] = useState([]);
