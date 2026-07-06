@@ -8,7 +8,7 @@ export function Farmaview() {
   const [obraSocial, setObraSocial] = useState(""); 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [resultados, setResultados] = useState([]);
+  const [resultados, setResultados] = useState<any[]>([]);
 
   // Lógica de búsqueda con Debounce (300ms) para no saturar
   useEffect(() => {
