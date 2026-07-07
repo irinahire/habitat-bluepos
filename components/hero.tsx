@@ -1,33 +1,51 @@
 export function Hero() {
-  const features = [
-    { title: "Gestión Inteligente", desc: "Arquitectura modular que crece con tu farmacia." },
-    { title: "Sincronización Total", desc: "Precios y catálogos al día con laboratorios." },
-    { title: "Control Fiscal", desc: "Emisión automática CAE/CAEA integrada." },
-    { title: "Recetario Magistral", desc: "Trazabilidad completa de fórmulas a medida." },
-  ];
-
   return (
-    <div className="flex flex-col gap-12 items-center py-16 px-4">
-      <div className="text-center space-y-4">
-        <h1 className="text-6xl font-black tracking-tighter text-emerald-500">
-          FRACTAL
-        </h1>
-        <p className="text-xl text-slate-400 font-light italic">
-          La evolución en la gestión farmacéutica.
+    <div className="flex flex-col items-center justify-center py-24 px-6 select-none animate-in fade-in duration-1000">
+      {/* Fibonacci / Golden Ratio SVG Construction */}
+      <div className="relative w-64 h-64 md:w-80 md:h-80 mb-16 group">
+        <svg
+          viewBox="0 0 100 100"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-full h-full text-emerald-500/40 group-hover:text-emerald-500/60 transition-colors duration-700"
+        >
+          {/* Rectángulos áureos de fondo */}
+          <rect x="0" y="0" width="100" height="61.8" stroke="currentColor" strokeWidth="0.2" />
+          <rect x="61.8" y="0" width="38.2" height="61.8" stroke="currentColor" strokeWidth="0.2" />
+          <rect x="61.8" y="38.2" width="38.2" height="23.6" stroke="currentColor" strokeWidth="0.2" />
+          
+          {/* La Espiral Path */}
+          <path
+            d="M0 61.8 C0 0 61.8 0 61.8 61.8 C61.8 100 100 100 100 61.8"
+            stroke="currentColor"
+            strokeWidth="1"
+            strokeLinecap="round"
+            className="drop-shadow-[0_0_8px_rgba(16,185,129,0.3)]"
+          />
+          
+          {/* Puntos de convergencia */}
+          <circle cx="61.8" cy="61.8" r="0.8" fill="currentColor" />
+          <circle cx="0" cy="61.8" r="0.5" fill="currentColor" />
+        </svg>
+      </div>
+
+      {/* Contenido Abstracto */}
+      <div className="flex flex-col items-center space-y-6 text-center">
+        <div className="h-px w-16 bg-emerald-500/30" />
+        
+        <p className="text-[10px] tracking-[0.8em] uppercase font-medium text-emerald-500/60">
+          Recursive Genesis
         </p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl w-full">
-        {features.map((f, i) => (
-          <div key={i} className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-emerald-500/50 transition-all">
-            <h3 className="text-emerald-400 font-bold mb-2">{f.title}</h3>
-            <p className="text-sm text-slate-400">{f.desc}</p>
-          </div>
-        ))}
-      </div>
-
-      <div className="text-center">
-        <p className="text-sm text-slate-500">Sistema en fase de optimización operativa.</p>
+        
+        <h2 className="text-3xl md:text-4xl font-extralight tracking-tight text-foreground/80 max-w-2xl">
+          Everything that scales is already contained within its origin.
+        </h2>
+        
+        <div className="flex gap-2">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="w-1.5 h-1.5 rounded-full bg-slate-800 border border-emerald-500/20" />
+          ))}
+        </div>
       </div>
     </div>
   );
