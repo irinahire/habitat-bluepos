@@ -11,5 +11,5 @@ export async function GET(request: Request) {
   }
 
   // Redirige al usuario al dashboard o página principal después de loguearse
-  return NextResponse.redirect(new URL("/dashboard", requestUrl.origin));
+  return NextResponse.redirect(new URL("/protected", requestUrl.origin));
 }
