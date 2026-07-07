@@ -1,31 +1,34 @@
 export function Hero() {
+  const features = [
+    { title: "Gestión Inteligente", desc: "Arquitectura modular que crece con tu farmacia." },
+    { title: "Sincronización Total", desc: "Precios y catálogos al día con laboratorios." },
+    { title: "Control Fiscal", desc: "Emisión automática CAE/CAEA integrada." },
+    { title: "Recetario Magistral", desc: "Trazabilidad completa de fórmulas a medida." },
+  ];
+
   return (
-    <div className="flex flex-col gap-8 items-center py-10">
-      <div className="flex flex-col items-center gap-2">
-        <h1 className="text-4xl md:text-5xl font-bold text-emerald-500">
-          Fractal
+    <div className="flex flex-col gap-12 items-center py-16 px-4">
+      <div className="text-center space-y-4">
+        <h1 className="text-6xl font-black tracking-tighter text-emerald-500">
+          FRACTAL
         </h1>
-        <p className="text-xl text-slate-400">
-          Gestión Inteligente de Farmacia
+        <p className="text-xl text-slate-400 font-light italic">
+          La evolución en la gestión farmacéutica.
         </p>
       </div>
 
-      <p className="text-lg text-slate-300 max-w-xl text-center">
-        Bienvenido al sistema. Desde aquí podrás acceder a los módulos de 
-        facturación, stock, cuentas corrientes y gestión de magistrales.
-      </p>
-
-      {/* Aquí podremos agregar botones de acceso rápido más adelante */}
-      <div className="flex gap-4 mt-4">
-        <div className="px-4 py-2 bg-emerald-900/30 border border-emerald-800 rounded-lg text-emerald-300 text-sm">
-          Sistema Operativo
-        </div>
-        <div className="px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-400 text-sm">
-          Estado: Conectado
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl w-full">
+        {features.map((f, i) => (
+          <div key={i} className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-emerald-500/50 transition-all">
+            <h3 className="text-emerald-400 font-bold mb-2">{f.title}</h3>
+            <p className="text-sm text-slate-400">{f.desc}</p>
+          </div>
+        ))}
       </div>
-      
-      <div className="w-full p-[1px] bg-gradient-to-r from-transparent via-foreground/10 to-transparent my-8" />
+
+      <div className="text-center">
+        <p className="text-sm text-slate-500">Sistema en fase de optimización operativa.</p>
+      </div>
     </div>
   );
 }
