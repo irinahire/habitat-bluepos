@@ -26,7 +26,6 @@ export function LoginForm({
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   
-  // Inicializamos el cliente usando useMemo para evitar errores durante el build
   const supabase = useMemo(() => createClient(), []);
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -48,14 +47,23 @@ export function LoginForm({
     }
   };
 
-  // Función para Google
+  // Función para Google corregida y blindada contra fallas silenciosas
   const handleGoogleLogin = async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
-    });
+    setError(null);
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
+
+      if (error) throw error;
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : "Error al conectar con Google";
+      setError(errorMessage);
+      console.error("Error detallado en Google OAuth:", err);
+    }
   };
 
   return (
@@ -104,7 +112,6 @@ export function LoginForm({
                 {isLoading ? "Logging in..." : "Login"}
               </Button>
               
-              {/* Separador */}
               <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
                 <span className="relative z-10 bg-background px-2 text-muted-foreground">Or</span>
               </div>
