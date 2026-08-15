@@ -10,7 +10,10 @@ export function LogoutButton() {
   const logout = async () => {
     const supabase = createClient();
     await supabase.auth.signOut();
-    router.push("/auth/login");
+    
+    // Redirige a la raíz del subdominio actual en lugar de al login
+    router.push("/");
+    router.refresh();
   };
 
   return <Button onClick={logout}>Logout</Button>;
