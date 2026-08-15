@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 export function SignUpForm({
   className,
@@ -27,9 +27,11 @@ export function SignUpForm({
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
+  // Inicializamos el cliente usando useMemo
+  const supabase = useMemo(() => createClient(), []);
+
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    const supabase = createClient();
     setIsLoading(true);
     setError(null);
 
@@ -44,7 +46,7 @@ export function SignUpForm({
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/protected`,
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
         },
       });
       if (error) throw error;
@@ -53,6 +55,25 @@ export function SignUpForm({
       setError(error instanceof Error ? error.message : "An error occurred");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  // Función para Google OAuth en el registro (misma lógica segura)
+  const handleGoogleSignUp = async () => {
+    setError(null);
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
+
+      if (error) throw error;
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : "Error al conectar con Google";
+      setError(errorMessage);
+      console.error("Error detallado en Google OAuth (Sign Up):", err);
     }
   };
 
@@ -104,6 +125,16 @@ export function SignUpForm({
               {error && <p className="text-sm text-red-500">{error}</p>}
               <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? "Creating an account..." : "Sign up"}
+              </Button>
+
+              {/* Separador */}
+              <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
+                <span className="relative z-10 bg-background px-2 text-muted-foreground">Or</span>
+              </div>
+
+              {/* BOTÓN GOOGLE PARA REGISTRO */}
+              <Button type="button" variant="outline" className="w-full" onClick={handleGoogleSignUp}>
+                Sign up with Google
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
