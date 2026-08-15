@@ -4,20 +4,25 @@ import { NextResponse } from "next/server";
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get("code");
-  
-  // Captura opcionalmente un parámetro 'next' si se envía, por defecto va a '/protected'
   const next = requestUrl.searchParams.get("next") ?? "/protected";
 
-  if (code) {
+  if (!code) {
+    console.error("Fallo silencioso Auth: No se encontró el código en los parámetros de la URL.");
+    return NextResponse.redirect(new URL("/login?error=missing_code", requestUrl.origin));
+  }
+
+  try {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     
-    if (!error) {
-      // Redirige manteniendo el subdominio exacto de origen (ej: pos.bluelab.online/protected)
-      return NextResponse.redirect(new URL(next, requestUrl.origin));
+    if (error) {
+      console.error("Error detallado al intercambiar el código por sesión:", error.message, error);
+      return NextResponse.redirect(new URL(`/login?error=${encodeURIComponent(error.message)}`, requestUrl.origin));
     }
-  }
 
-  // Si algo falla con el código, redirige al login con un parámetro de error
-  return NextResponse.redirect(new URL("/login?error=auth_callback_error", requestUrl.origin));
+    return NextResponse.redirect(new URL(next, requestUrl.origin));
+  } catch (err: any) {
+    console.error("Excepción no capturada en el callback de auth:", err?.message || err);
+    return NextResponse.redirect(new URL("/login?error=server_exception", requestUrl.origin));
+  }
 }
