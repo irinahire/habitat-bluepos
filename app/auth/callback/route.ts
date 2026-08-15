@@ -4,12 +4,20 @@ import { NextResponse } from "next/server";
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get("code");
+  
+  // Captura opcionalmente un parámetro 'next' si se envía, por defecto va a '/protected'
+  const next = requestUrl.searchParams.get("next") ?? "/protected";
 
   if (code) {
     const supabase = await createClient();
-    await supabase.auth.exchangeCodeForSession(code);
+    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    
+    if (!error) {
+      // Redirige manteniendo el subdominio exacto de origen (ej: pos.bluelab.online/protected)
+      return NextResponse.redirect(new URL(next, requestUrl.origin));
+    }
   }
 
-  // Redirige al usuario al dashboard o página principal después de loguearse
-  return NextResponse.redirect(new URL("/protected", requestUrl.origin));
+  // Si algo falla con el código, redirige al login con un parámetro de error
+  return NextResponse.redirect(new URL("/login?error=auth_callback_error", requestUrl.origin));
 }
