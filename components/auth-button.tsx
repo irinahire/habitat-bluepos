@@ -6,14 +6,30 @@ import { LogoutButton } from "./logout-button";
 export async function AuthButton() {
   const supabase = await createClient();
 
-  // You can also use getUser() which will be slower.
+  // Obtenemos los datos completos del usuario (incluyendo metadata)
+  const { data: { user } } = await supabase.auth.getUser();
+  
+  // O bien si usabas claims:
   const { data } = await supabase.auth.getClaims();
+  const claims = data?.claims;
 
-  const user = data?.claims;
+  // Extraemos la información real del usuario
+  const userEmail = user?.email || claims?.email || "Usuario";
+  const userName = userEmail.split('@')[0];
+  
+  // Buscamos la foto real en los metadatos de Supabase (Google/GitHub/etc. la guardan acá)
+  const userAvatar = user?.user_metadata?.avatar_url || 
+                     user?.user_metadata?.picture || 
+                     `https://api.dicebear.com/7.x/avataaars/svg?seed=${userEmail}`;
 
-  return user ? (
-    <div className="flex items-center gap-4">
-      Hey, {user.email}!
+  return user || claims ? (
+    <div className="user-profile">
+      <img 
+        src={userAvatar} 
+        alt="Avatar" 
+        className="user-avatar" 
+      />
+      <span className="user-name">{userName}</span>
       <LogoutButton />
     </div>
   ) : (
