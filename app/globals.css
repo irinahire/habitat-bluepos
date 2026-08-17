@@ -3,40 +3,171 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
-    --card: 222 47% 15%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 173 80% 50%;
-    --primary-foreground: 222 47% 11%;
-    --secondary: 222 47% 20%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 222 47% 20%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 173 80% 50%;
-    --accent-foreground: 222 47% 11%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217 32% 17%;
-    --input: 217 32% 17%;
-    --ring: 173 80% 50%;
-    --radius: 0.75rem;
+  :root, .light {
+    --irina-primary: #bc8abf; /* Fucsia principal */
+    --irina-secondary: #96e8da; /* Turquesa secundario */
+    --irina-gradient: linear-gradient(to right, #bc8abf 0%, #96e8da 100%);
+    --btn-gradient: linear-gradient(to right, #bc8abf 0%, #96e8da 100%);
+    --bg-surface: #ffffff;
+    --text-main: #333333;
+    --border-input: #bc8abf;
+  }
+
+  .dark {
+    /* Colores invertidos */
+    --irina-primary: #96e8da;
+    --irina-secondary: #bc8abf;
+    --irina-gradient: linear-gradient(to right, #96e8da 0%, #bc8abf 100%);
+    --btn-gradient: linear-gradient(to right, #96e8da 0%, #bc8abf 100%);
+    --bg-surface: #ffffff;
+    --text-main: #333333;
+    --border-input: #bc8abf;
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  
-  body {
-    /* Degradado diagonal: de fucsia (#bb8bbd) abajo-izquierda a turquesa (#94e5d6) arriba-derecha */
-    background: linear-gradient(45deg, #bb8bbd 0%, #94e5d6 100%);
-    background-attachment: fixed;
-    min-height: 100vh;
-    @apply text-foreground;
-  }
+/* Animaciones */
+@keyframes rotate { 
+  100% { transform: rotate(360deg); } 
+}
+
+/* EFECTO HILO DE LUZ EN BOTÓN */
+.btn-wrapper { 
+  position: relative; 
+  padding: 2px; 
+  border-radius: 12px; 
+  overflow: hidden; 
+  cursor: pointer; 
+  display: inline-block; 
+  transition: box-shadow 0.3s ease;
+}
+
+.btn-wrapper::before { 
+  content: ""; 
+  position: absolute; 
+  top: -50%; 
+  left: -50%; 
+  width: 200%; 
+  height: 200%; 
+  background: conic-gradient(transparent, var(--irina-primary), var(--irina-secondary), transparent); 
+  animation: rotate 3s linear infinite; 
+  display: none; 
+}
+
+.btn-wrapper:hover::before { 
+  display: block; 
+}
+
+/* Sombra 3D sutil al hacer hover */
+.btn-wrapper:hover {
+  box-shadow: 0 8px 15px -4px rgba(188, 138, 195, 0.4);
+}
+
+.btn-pub { 
+  background: var(--btn-gradient); 
+  color: white; 
+  border: none; 
+  padding: 12px 30px; 
+  border-radius: 9px; 
+  font-weight: 800; 
+  cursor: pointer; 
+  position: relative; 
+  z-index: 1; 
+  font-family: 'Inter', sans-serif; 
+  min-width: 120px; 
+  width: 100%;
+}
+
+.btn-copy { 
+  background: var(--irina-secondary); 
+  color: var(--irina-primary); 
+  border: 2px solid var(--irina-primary); 
+  padding: 10px 20px; 
+  border-radius: 9px; 
+  font-weight: 800; 
+  cursor: pointer; 
+}
+
+/* INPUTS */
+.input-group { 
+  position: relative; 
+  margin-top: 30px; 
+}
+
+.input-group label { 
+  position: absolute; 
+  left: 12px; 
+  top: 14px; 
+  color: var(--irina-primary); 
+  font-weight: 700; 
+  transition: 0.2s; 
+  pointer-events: none; 
+  background: var(--bg-surface); 
+  padding: 0 4px; 
+  font-size: 14px; 
+}
+
+.input-group input { 
+  width: 100%; 
+  padding: 14px; 
+  border: 2px solid var(--border-input); 
+  border-radius: 10px; 
+  outline: none; 
+  font-size: 14px; 
+  color: var(--text-main); 
+  background: var(--bg-surface);
+  box-sizing: border-box; 
+}
+
+.input-group input:focus {
+  border-color: var(--irina-primary);
+}
+
+.input-group input:focus + label, 
+.input-group input:not(:placeholder-shown) + label { 
+  top: -10px; 
+  font-size: 11px; 
+  color: var(--irina-primary); 
+}
+
+.input-group input::placeholder { 
+  color: var(--irina-primary); 
+  font-weight: 700; 
+  opacity: 0.5; 
+}
+
+/* --- ESTILOS DE PERFIL DE USUARIO (ESTILO PÍLDORA) --- */
+.user-profile { 
+  display: flex; 
+  align-items: center; 
+  gap: 15px; 
+  background: rgba(255,255,255,0.1); 
+  padding: 8px 20px 8px 8px; 
+  border-radius: 50px; 
+  border: 1px solid rgba(255,255,255,0.2); 
+}
+
+.user-avatar { 
+  width: 40px; 
+  height: 40px; 
+  border-radius: 50%; 
+  border: 2px solid var(--irina-secondary); 
+  object-fit: cover;
+}
+
+.user-name { 
+  font-size: 0.9rem; 
+  font-weight: 600; 
+  color: white;
+}
+
+.logout-btn { 
+  background: #333; 
+  color: white; 
+  border: none; 
+  padding: 8px 15px; 
+  border-radius: 50px; 
+  font-size: 0.7rem; 
+  font-weight: 800; 
+  cursor: pointer; 
+  text-transform: uppercase;
 }
