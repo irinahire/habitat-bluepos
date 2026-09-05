@@ -57,16 +57,17 @@ export function Header() {
       </DropdownMenu>
 
 {/* menu contextual dinámico */}
-<div className="flex items-center gap-4 border-l pl-6 border-border/50">
+<div className="flex items-center gap-3 pl-6 border-l border-border/50 bg-transparent">
   {activeModule && menurubro[activeModule]?.map((item) => (
-    <button
-      key={item.label}
-      type="button"
-      className="flex items-center gap-2 text-xs capitalize text-muted-foreground hover:text-foreground transition-colors bg-transparent border-0 cursor-pointer p-0"
+    <Button 
+      key={item.label} 
+      variant="ghost" 
+      size="sm" 
+      className="gap-2 text-xs capitalize text-muted-foreground hover:text-foreground hover:bg-white/10"
     >
-      <item.icon className="size-3.5" />
+      <item.icon className="size-4" /> 
       <span>{item.label}</span>
-    </button>
+    </Button>
   ))}
 </div>
       
