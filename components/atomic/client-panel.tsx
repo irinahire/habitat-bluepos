@@ -1,33 +1,34 @@
 // components/atomic/client-panel.tsx
 "use client";
 
-import { ObraSocialPanel } from "./obra-social-panel";
-
 interface ClientPanelProps {
-  obraSocial: string;
-  setObraSocial: (val: string) => void;
-  onValidateOS: () => void;
-  isValidatedOS: boolean;
+  onOpenClientModal?: () => void;
+  selectedClient?: { nombre: string; apellido: string; documento: string } | null;
 }
 
-export function ClientPanel({ obraSocial, setObraSocial, onValidateOS, isValidatedOS }: ClientPanelProps) {
+export function ClientPanel({ onOpenClientModal, selectedClient }: ClientPanelProps) {
   return (
-    <div className="bg-card border border-border rounded-xl p-4 space-y-4 shadow-lg">
-      <div className="space-y-3">
-        <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Datos del Cliente</h4>
-        <div className="grid grid-cols-2 gap-2">
-          <input className="bg-slate-950 border border-slate-800 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-emerald-500" placeholder="Nombre" />
-          <input className="bg-slate-950 border border-slate-800 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-emerald-500" placeholder="Apellido" />
-        </div>
-        <input className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-emerald-500" placeholder="DNI / CUIT / Carnet" />
+    <div className="bg-card border border-border rounded-xl p-4 space-y-3 shadow-lg">
+      <div className="flex justify-between items-center">
+        <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Cliente</h4>
+        <button 
+          onClick={onOpenClientModal}
+          className="text-xs text-emerald-400 hover:text-emerald-300 font-medium underline"
+        >
+          {selectedClient ? "Cambiar" : "Buscar / Nuevo"}
+        </button>
       </div>
 
-      <ObraSocialPanel 
-        obraSocial={obraSocial} 
-        setObraSocial={setObraSocial} 
-        onValidate={onValidateOS} 
-        isValidated={isValidatedOS} 
-      />
+      <div className="bg-slate-950 border border-slate-800 rounded-lg p-3 text-sm text-slate-300">
+        {selectedClient ? (
+          <div>
+            <p className="font-semibold text-white">{selectedClient.nombre} {selectedClient.apellido}</p>
+            <p className="text-xs text-slate-400">Doc: {selectedClient.documento}</p>
+          </div>
+        ) : (
+          <span className="text-slate-500 italic">Consumidor Final</span>
+        )}
+      </div>
     </div>
   );
 }
