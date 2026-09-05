@@ -1,38 +1,33 @@
 // components/atomic/client-panel.tsx
 "use client";
 
+import { ObraSocialPanel } from "./obra-social-panel";
+
 interface ClientPanelProps {
   obraSocial: string;
   setObraSocial: (val: string) => void;
+  onValidateOS: () => void;
+  isValidatedOS: boolean;
 }
 
-export function ClientPanel({ obraSocial, setObraSocial }: ClientPanelProps) {
+export function ClientPanel({ obraSocial, setObraSocial, onValidateOS, isValidatedOS }: ClientPanelProps) {
   return (
-    <div className="space-y-6">
-      <div className="space-y-4">
-        <h4 className="text-xs font-bold text-slate-500 uppercase">Datos del Cliente</h4>
-        <div className="grid grid-cols-2 gap-3">
+    <div className="bg-card border border-border rounded-xl p-4 space-y-4 shadow-lg">
+      <div className="space-y-3">
+        <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Datos del Cliente</h4>
+        <div className="grid grid-cols-2 gap-2">
           <input className="bg-slate-950 border border-slate-800 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-emerald-500" placeholder="Nombre" />
           <input className="bg-slate-950 border border-slate-800 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-emerald-500" placeholder="Apellido" />
         </div>
         <input className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-emerald-500" placeholder="DNI / CUIT / Carnet" />
       </div>
 
-      <select 
-        value={obraSocial}
-        onChange={(e) => setObraSocial(e.target.value)} 
-        className="w-full bg-slate-950 p-2 rounded-lg text-sm text-slate-300 border border-slate-800 focus:outline-none focus:border-emerald-500"
-      >
-        <option value="">Particular</option>
-        <option value="osde">OSDE</option>
-        <option value="ioma">IOMA</option>
-      </select>
-
-      {obraSocial !== "" && (
-        <button className="w-full py-2 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-500 transition">
-          Validar Obra Social
-        </button>
-      )}
+      <ObraSocialPanel 
+        obraSocial={obraSocial} 
+        setObraSocial={setObraSocial} 
+        onValidate={onValidateOS} 
+        isValidated={isValidatedOS} 
+      />
     </div>
   );
 }
