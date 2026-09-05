@@ -5,24 +5,24 @@
 
 @layer base {
   :root {
-    --bluepos-primary: #0284c7;    
-    --bluepos-secondary: #6366f1;  
-    --irina-gradient: linear-gradient(to right, #0284c7 0%, #6366f1 100%);
-    --btn-gradient: linear-gradient(to right, #0284c7 0%, #6366f1 100%);
+    --bluepos-primary: #f97316;    
+    --bluepos-secondary: #8b5cf6;  
+    --irina-gradient: linear-gradient(135deg, #f97316 0%, #8b5cf6 100%);
+    --btn-gradient: linear-gradient(135deg, #f97316 0%, #8b5cf6 100%);
     
-    --card: 224 71% 6% / 0.75;
+    --card: 224 71% 6% / 0.85;
     --card-foreground: 213 31% 91%;
     --popover: 224 71% 6% / 0.9;
     --popover-foreground: 213 31% 91%;
     
-    --border: 216 34% 80% / 0.5;
+    --border: 216 34% 20% / 0.5;
   }
 }
 
-/* Fondo general estilo Apple (Gris espacial claro y limpio) */
+/* Fondo general completamente oscuro y elegante */
 body {
-  background: linear-gradient(135deg, #f5f5f7 0%, #e5e5ea 100%);
-  color: #1d1d1f;
+  background: #07090e;
+  color: #f8fafc;
   font-family: 'Inter', sans-serif;
   min-height: 100vh;
   background-attachment: fixed;
@@ -33,7 +33,7 @@ body {
   100% { transform: rotate(360deg); } 
 }
 
-/* EFECTO HILO DE LUZ EN BOTÓN */
+/* EFECTO HILO DE LUZ EN BOTÓN / TARJETAS */
 .btn-wrapper { 
   position: relative; 
   padding: 2px; 
@@ -61,7 +61,7 @@ body {
 }
 
 .btn-wrapper:hover {
-  box-shadow: 0 8px 20px -4px rgba(2, 132, 199, 0.35);
+  box-shadow: 0 8px 20px -4px rgba(249, 115, 22, 0.35);
 }
 
 .btn-pub { 
@@ -81,7 +81,7 @@ body {
 
 .btn-copy { 
   background: var(--bluepos-secondary); 
-  color: var(--bluepos-primary); 
+  color: #fff; 
   border: 2px solid var(--bluepos-primary); 
   padding: 10px 20px; 
   border-radius: 9px; 
@@ -103,7 +103,7 @@ body {
   font-weight: 700; 
   transition: 0.2s; 
   pointer-events: none; 
-  background: #ffffff; 
+  background: #07090e; 
   padding: 0 4px; 
   font-size: 14px; 
 }
@@ -111,12 +111,12 @@ body {
 .input-group input { 
   width: 100%; 
   padding: 14px; 
-  border: 2px solid #cbd5e1; 
+  border: 2px solid #1e293b; 
   border-radius: 10px; 
   outline: none; 
   font-size: 14px; 
-  color: #0f172a; 
-  background: #ffffff;
+  color: #f8fafc; 
+  background: #07090e;
   box-sizing: border-box; 
 }
 
@@ -142,10 +142,10 @@ body {
   display: flex; 
   align-items: center; 
   gap: 15px; 
-  background: rgba(0,0,0,0.03); 
+  background: rgba(255,255,255,0.03); 
   padding: 8px 20px 8px 8px; 
   border-radius: 50px; 
-  border: 1px solid rgba(0,0,0,0.08); 
+  border: 1px solid rgba(255,255,255,0.08); 
 }
 
 .user-avatar { 
@@ -159,12 +159,12 @@ body {
 .user-name { 
   font-size: 0.9rem; 
   font-weight: 600; 
-  color: #1d1d1f;
+  color: white;
 }
 
 .logout-btn { 
-  background: #e2e8f0; 
-  color: #0f172a; 
+  background: #1e293b; 
+  color: white; 
   border: none; 
   padding: 8px 15px; 
   border-radius: 50px; 
@@ -174,18 +174,18 @@ body {
   text-transform: uppercase;
 }
 
-/* FORZAR FONDO CLARO ESTILO APPLE EN TODA LA PANTALLA */
+/* FORZAR FONDO OSCURO LIMPIO EN LA APP */
 html, body, #__next, main {
-  background: linear-gradient(135deg, #f5f5f7 0%, #e5e5ea 100%) !important;
+  background: #07090e !important;
   background-attachment: fixed !important;
 }
 
-/* Las tarjetas del POS se mantienen oscuras y profesionales contrastando con el fondo claro */
+/* Tarjetas oscuras con un toque sutil de borde estilo marco */
 .bg-card, 
 div[class*="rounded-xl"], 
 div[class*="rounded-2xl"],
 div[class*="border"] {
   background-color: #0b0f19 !important;
-  color: #f8fafc !important;
+  border-color: rgba(139, 92, 246, 0.2) !important;
   backdrop-filter: none !important;
 }
