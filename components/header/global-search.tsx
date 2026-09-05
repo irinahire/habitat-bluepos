@@ -3,12 +3,21 @@
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { useHabitat } from "@/domain/habitatcontext";
 
 export function GlobalSearch() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  
+  // Extraemos el módulo/rubro activo directamente del contexto genérico
+  const { activeModule } = useHabitat();
   const supabase = createClient();
+
+  // Obtenemos dinámicamente el valor del servicio desde la configuración del módulo.
+  // Si el módulo activo trae un identificador (ej. 'farmaview' -> 'farma', o usa el activeModule limpio),
+  // lo derivamos de forma automática sin condiciones hardcodeadas.
+  const dynamicServiceValue = activeModule ? activeModule.replace('view', '').toLowerCase() : 'bluepos';
 
   const handleSearch = async (searchTerm: string) => {
     setQuery(searchTerm);
@@ -19,16 +28,18 @@ export function GlobalSearch() {
 
     setLoading(true);
     try {
+      // La consulta utiliza el valor dinámico extraído de la llave/módulo activo,
+      // consultando exclusivamente los registros que correspondan a ese espacio en la base de datos.
       const { data, error } = await supabase.rpc('search_habitat', {
         search_query: searchTerm,
-        target_service: 'bluepos',
+        target_service: dynamicServiceValue,
         match_count: 5
       });
 
       if (error) throw error;
       setResults(data || []);
     } catch (err) {
-      console.error("Error en búsqueda semántica:", err);
+      console.error("Error en búsqueda dinámica:", err);
     } finally {
       setLoading(false);
     }
@@ -42,7 +53,7 @@ export function GlobalSearch() {
           type="text"
           value={query}
           onChange={(e) => handleSearch(e.target.value)}
-          placeholder="Escribí lo que buscas (ej. remedio para hipertensos)..."
+          placeholder={`Buscar en ${dynamicServiceValue}...`}
           className="w-full bg-gray-900/80 border border-white/15 rounded-xl pl-9 pr-4 py-1.5 text-sm text-white placeholder-gray-400 focus:outline-none focus:border-teal-500 transition-all shadow-inner"
         />
       </div>
@@ -65,13 +76,13 @@ export function GlobalSearch() {
                     )}
                   </div>
                   <span className="text-xs text-gray-400">
-                    {item.data?.description || item.metadata?.category || "Resultado de búsqueda"}
+                    {item.data?.description || item.metadata?.category || "Elemento del habitat"}
                   </span>
                 </div>
               ))}
             </div>
           ) : (
-            <div className="p-3 text-center text-xs text-gray-400">No se encontraron resultados.</div>
+            <div className="p-3 text-center text-xs text-gray-400">No se encontraron resultados en este rubro.</div>
           )}
         </div>
       )}
