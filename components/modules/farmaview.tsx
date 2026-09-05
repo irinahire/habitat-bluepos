@@ -11,10 +11,15 @@ import { ExtendedSearchModal } from "@/components/atomic/extended-search-modal";
 export function Farmaview() {
   const [cart, setCart] = useState<any[]>([]);
   const [obraSocial, setObraSocial] = useState(""); 
+  const [isValidatedOS, setIsValidatedOS] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const agregarAlCarrito = (producto: any) => {
     setCart((prev) => [...prev, producto]);
+  };
+
+  const handleValidateOS = () => {
+    setIsValidatedOS(true);
   };
 
   // Captura de atajos de teclado globales
@@ -73,7 +78,15 @@ export function Farmaview() {
 
         {/* Columna Derecha: Panel de Cliente, Cobertura y Checkout */}
         <div className="bg-slate-900/90 p-6 rounded-3xl border border-slate-800 flex flex-col justify-between shadow-xl">
-          <ClientPanel obraSocial={obraSocial} setObraSocial={setObraSocial} />
+          <ClientPanel 
+            obraSocial={obraSocial} 
+            setObraSocial={(val) => {
+              setObraSocial(val);
+              setIsValidatedOS(false);
+            }} 
+            onValidateOS={handleValidateOS}
+            isValidatedOS={isValidatedOS}
+          />
           <CheckoutSummary cart={cart} onCheckout={() => alert("Cobro realizado con éxito")} />
         </div>
       </div>
