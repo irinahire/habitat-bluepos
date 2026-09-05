@@ -9,6 +9,7 @@ import { ObraSocialPanel } from "@/components/atomic/obra-social-panel";
 import { CheckoutSummary } from "@/components/atomic/checkout-summary";
 import { ExtendedSearchModal } from "@/components/atomic/extended-search-modal";
 import MagistralesView from "@/components/atomic/magistrales-view";
+import CashboxView from "@/components/atomic/cashbox-view";
 
 export function Farmaview() {
   const [activeTab, setActiveTab] = useState<'pos' | 'magistrates' | 'stock' | 'patients' | 'cashbox'>('pos');
@@ -111,10 +112,7 @@ export function Farmaview() {
           <p className="text-xs">Padrón unificado de clientes y obras sociales...</p>
         </div>
       ) : activeTab === 'cashbox' ? (
-        <div className="p-8 text-slate-400 text-center bg-[#0b0f19] border border-slate-800 rounded-2xl">
-          <h3 className="text-lg font-bold text-white mb-2">Caja y Arqueo de Turno</h3>
-          <p className="text-xs">Control de ingresos, cierres parciales y totales...</p>
-        </div>
+        <CashboxView />
       ) : (
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 h-full">
           {/* Columna Izquierda: Buscador y Grilla del Carrito */}
