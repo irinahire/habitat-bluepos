@@ -10,14 +10,16 @@ export function GlobalSearch() {
   const [results, setResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   
-  // Extraemos el módulo/rubro activo directamente del contexto genérico
   const { activeModule } = useHabitat();
   const supabase = createClient();
 
-  // Obtenemos dinámicamente el valor del servicio desde la configuración del módulo.
-  // Si el módulo activo trae un identificador (ej. 'farmaview' -> 'farma', o usa el activeModule limpio),
-  // lo derivamos de forma automática sin condiciones hardcodeadas.
-  const dynamicServiceValue = activeModule ? activeModule.replace('view', '').toLowerCase() : 'bluepos';
+  // Derivamos el tipo de entidad esperado según el módulo activo (ej: 'libraryview' -> '!libro', 'restaurantview' -> '!plato')
+  const getTargetTipo = () => {
+    if (activeModule === 'libraryview') return '!libro';
+    if (activeModule === 'restaurantview') return '!plato';
+    if (activeModule === 'farmaview') return '!medicamento'; // o el tipo que corresponda
+    return null;
+  };
 
   const handleSearch = async (searchTerm: string) => {
     setQuery(searchTerm);
@@ -28,18 +30,16 @@ export function GlobalSearch() {
 
     setLoading(true);
     try {
-      // La consulta utiliza el valor dinámico extraído de la llave/módulo activo,
-      // consultando exclusivamente los registros que correspondan a ese espacio en la base de datos.
       const { data, error } = await supabase.rpc('search_habitat', {
         search_query: searchTerm,
-        target_service: dynamicServiceValue,
+        target_tipo: getTargetTipo(),
         match_count: 5
       });
 
       if (error) throw error;
       setResults(data || []);
     } catch (err) {
-      console.error("Error en búsqueda dinámica:", err);
+      console.error("Error en búsqueda polimórfica:", err);
     } finally {
       setLoading(false);
     }
@@ -53,7 +53,7 @@ export function GlobalSearch() {
           type="text"
           value={query}
           onChange={(e) => handleSearch(e.target.value)}
-          placeholder={`Buscar en ${dynamicServiceValue}...`}
+          placeholder="Escribí para buscar..."
           className="w-full bg-gray-900/80 border border-white/15 rounded-xl pl-9 pr-4 py-1.5 text-sm text-white placeholder-gray-400 focus:outline-none focus:border-teal-500 transition-all shadow-inner"
         />
       </div>
@@ -64,25 +64,33 @@ export function GlobalSearch() {
             <div className="p-3 text-center text-xs text-gray-400">Buscando...</div>
           ) : results.length > 0 ? (
             <div className="max-h-60 overflow-y-auto divide-y divide-white/10">
-              {results.map((item) => (
-                <div 
-                  key={item.id}
-                  className="p-3 hover:bg-white/5 cursor-pointer transition-colors flex flex-col gap-0.5"
-                >
-                  <div className="text-sm font-medium text-white flex justify-between items-center">
-                    <span>{item.data?.name || item.raw_text || "Resultado"}</span>
-                    {item.data?.price && (
-                      <span className="text-teal-400 font-semibold">${item.data.price}</span>
-                    )}
+              {results.map((item) => {
+                // Extracción agnóstica del título o nombre según la estructura interna
+                const parsedData = typeof item.data === 'string' ? JSON.parse(item.data) : item.data;
+                const innerObj = parsedData?.[Object.keys(parsedData)[0]] || {};
+                const nameOrTitle = innerObj?.identificacion?.titulo || innerObj?.identificacion?.nombre || item.raw_text || "Resultado";
+                const price = innerObj?.identificacion?.precio?.[0]?.valor;
+
+                return (
+                  <div 
+                    key={item.id}
+                    className="p-3 hover:bg-white/5 cursor-pointer transition-colors flex flex-col gap-0.5"
+                  >
+                    <div className="text-sm font-medium text-white flex justify-between items-center">
+                      <span>{nameOrTitle}</span>
+                      {price && (
+                        <span className="text-teal-400 font-semibold">${price}</span>
+                      )}
+                    </div>
+                    <span className="text-xs text-gray-400 truncate">
+                      {innerObj?.vista_cliente?.descripcion || item.raw_text}
+                    </span>
                   </div>
-                  <span className="text-xs text-gray-400">
-                    {item.data?.description || item.metadata?.category || "Elemento del habitat"}
-                  </span>
-                </div>
-              ))}
+                );
+              })}
             </div>
           ) : (
-            <div className="p-3 text-center text-xs text-gray-400">No se encontraron resultados en este rubro.</div>
+            <div className="p-3 text-center text-xs text-gray-400">No se encontraron resultados.</div>
           )}
         </div>
       )}
