@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { GlobalSearch } from "@/components/atomic/global-search";
 import { CartTable } from "@/components/atomic/cart-table";
 import { ClientPanel } from "@/components/atomic/client-panel";
+import { ObraSocialPanel } from "@/components/atomic/obra-social-panel";
 import { CheckoutSummary } from "@/components/atomic/checkout-summary";
 import { ExtendedSearchModal } from "@/components/atomic/extended-search-modal";
 
@@ -48,7 +49,6 @@ export function Farmaview() {
         
         {/* Columna Izquierda: Buscador Global Atómico y Grilla de Ítems */}
         <div className="xl:col-span-2 space-y-4 flex flex-col h-full">
-          {/* Fila superior de búsqueda: Input directo y limpio + Botón Extendido sin contenedor oscuro doble */}
           <div className="flex items-center gap-3">
             <div className="flex-1">
               <GlobalSearch 
@@ -70,25 +70,35 @@ export function Farmaview() {
             </button>
           </div>
 
-          {/* Tabla de carrito con diseño fluido */}
           <div className="flex-1 flex flex-col">
             <CartTable cart={cart} />
           </div>
         </div>
 
-        {/* Columna Derecha: Panel de Cliente, Cobertura y Checkout */}
-        <div className="bg-slate-900/90 p-6 rounded-3xl border border-slate-800 flex flex-col justify-between shadow-xl">
-          <ClientPanel 
-            obraSocial={obraSocial} 
-            setObraSocial={(val) => {
-              setObraSocial(val);
-              setIsValidatedOS(false);
-            }} 
-            onValidateOS={handleValidateOS}
-            isValidatedOS={isValidatedOS}
+        {/* Columna Derecha: Componentes Modularizados */}
+        <aside className="flex flex-col gap-4">
+          {/* Panel de Datos del Cliente */}
+          <ClientPanel />
+
+          {/* Panel específico de Obra Social / Cobertura */}
+          <div className="bg-card border border-border rounded-xl p-4 shadow-lg">
+            <ObraSocialPanel 
+              obraSocial={obraSocial} 
+              setObraSocial={(val) => {
+                setObraSocial(val);
+                setIsValidatedOS(false);
+              }} 
+              onValidate={handleValidateOS}
+              isValidated={isValidatedOS}
+            />
+          </div>
+
+          {/* Checkout Summary Puro / Agnóstico */}
+          <CheckoutSummary 
+            cart={cart} 
+            onCheckout={() => alert("Cobro realizado con éxito")} 
           />
-          <CheckoutSummary cart={cart} onCheckout={() => alert("Cobro realizado con éxito")} />
-        </div>
+        </aside>
       </div>
 
       <ExtendedSearchModal 
