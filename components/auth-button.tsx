@@ -75,7 +75,7 @@ export function AuthButton() {
   // Elemento del Modal separado para el Portal
   const modalContent = isModalOpen && mounted ? createPortal(
     <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
-      <div className="relative w-full max-w-md rounded-2xl border border-white/15 bg-gray-950 p-8 shadow-2xl">
+      <div className="relative w-[420px] h-[420px] aspect-square rounded-2xl border border-white/15 bg-gray-950 p-8 shadow-2xl flex flex-col justify-between">
         
         {/* Botón de cierre (X) */}
         <button 
