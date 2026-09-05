@@ -15,16 +15,16 @@ export function CheckoutSummary({ cart, onCheckout }: CheckoutSummaryProps) {
   }, 0);
 
   return (
-    <div className="mt-auto border-t border-slate-800 pt-6">
-      <div className="flex justify-between items-center mb-6">
-        <span className="text-slate-400">Total a Pagar</span>
+    <div className="bg-card border border-border rounded-xl p-4 flex flex-col justify-between shadow-lg">
+      <div className="flex justify-between items-center mb-4">
+        <span className="text-slate-400 font-medium">Total a Pagar</span>
         <span className="text-3xl font-bold text-white">
           ${total.toFixed(2)}
         </span>
       </div>
       <button 
         onClick={onCheckout}
-        className="w-full py-4 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-500 transition-all shadow-lg shadow-emerald-900/20"
+        className="w-full py-3.5 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-500 transition-all shadow-lg shadow-emerald-900/20 active:scale-[0.99]"
       >
         PAGAR (F8)
       </button>
