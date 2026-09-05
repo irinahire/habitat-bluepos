@@ -3,26 +3,23 @@
 @tailwind utilities;
 
 @layer base {
-  :root, .light {
-    --irina-primary: #06b6d4; /* Cian eléctrico principal */
-    --irina-secondary: #8b5cf6; /* Violeta / Índigo secundario */
-    --irina-gradient: linear-gradient(to right, #06b6d4 0%, #8b5cf6 100%);
-    --btn-gradient: linear-gradient(to right, #06b6d4 0%, #8b5cf6 100%);
-    --bg-surface: #ffffff;
-    --text-main: #333333;
-    --border-input: #06b6d4;
-  }
-
-  .dark {
-    /* Colores invertidos para modo oscuro */
-    --irina-primary: #22d3ee;
-    --irina-secondary: #a78bfa;
-    --irina-gradient: linear-gradient(to right, #22d3ee 0%, #a78bfa 100%);
-    --btn-gradient: linear-gradient(to right, #22d3ee 0%, #a78bfa 100%);
-    --bg-surface: #0f172a;
+  :root {
+    --bluepos-primary: #06b6d4;   /* Turquesa Brillante */
+    --bluepos-secondary: #6366f1; /* Índigo Espacial */
+    --irina-gradient: linear-gradient(to right, #06b6d4 0%, #6366f1 100%);
+    --btn-gradient: linear-gradient(to right, #06b6d4 0%, #6366f1 100%);
+    --bg-surface: #090d16;        /* Fondo oscuro profundo estilizado */
     --text-main: #f8fafc;
-    --border-input: #334155;
+    --border-input: #1e293b;
   }
+}
+
+/* Fondo general de la aplicación con sutil toque de profundidad */
+body {
+  background: radial-gradient(circle at top center, #0f172a 0%, #090d16 100%);
+  color: var(--text-main);
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
 }
 
 /* Animaciones */
@@ -48,7 +45,7 @@
   left: -50%; 
   width: 200%; 
   height: 200%; 
-  background: conic-gradient(transparent, var(--irina-primary), var(--irina-secondary), transparent); 
+  background: conic-gradient(transparent, var(--bluepos-primary), var(--bluepos-secondary), transparent); 
   animation: rotate 3s linear infinite; 
   display: none; 
 }
@@ -57,9 +54,8 @@
   display: block; 
 }
 
-/* Sombra 3D sutil al hacer hover */
 .btn-wrapper:hover {
-  box-shadow: 0 8px 15px -4px rgba(6, 182, 212, 0.4);
+  box-shadow: 0 8px 20px -4px rgba(6, 182, 212, 0.35);
 }
 
 .btn-pub { 
@@ -78,9 +74,9 @@
 }
 
 .btn-copy { 
-  background: var(--irina-secondary); 
-  color: var(--irina-primary); 
-  border: 2px solid var(--irina-primary); 
+  background: var(--bluepos-secondary); 
+  color: var(--bluepos-primary); 
+  border: 2px solid var(--bluepos-primary); 
   padding: 10px 20px; 
   border-radius: 9px; 
   font-weight: 800; 
@@ -97,7 +93,7 @@
   position: absolute; 
   left: 12px; 
   top: 14px; 
-  color: var(--irina-primary); 
+  color: var(--bluepos-primary); 
   font-weight: 700; 
   transition: 0.2s; 
   pointer-events: none; 
@@ -119,38 +115,38 @@
 }
 
 .input-group input:focus {
-  border-color: var(--irina-primary);
+  border-color: var(--bluepos-primary);
 }
 
 .input-group input:focus + label, 
 .input-group input:not(:placeholder-shown) + label { 
   top: -10px; 
   font-size: 11px; 
-  color: var(--irina-primary); 
+  color: var(--bluepos-primary); 
 }
 
 .input-group input::placeholder { 
-  color: var(--irina-primary); 
+  color: var(--bluepos-primary); 
   font-weight: 700; 
   opacity: 0.5; 
 }
 
-/* --- ESTILOS DE PERFIL DE USUARIO (ESTILO PÍLDORA) --- */
+/* --- ESTILOS DE PERFIL DE USUARIO --- */
 .user-profile { 
   display: flex; 
   align-items: center; 
   gap: 15px; 
-  background: rgba(255,255,255,0.1); 
+  background: rgba(255,255,255,0.03); 
   padding: 8px 20px 8px 8px; 
   border-radius: 50px; 
-  border: 1px solid rgba(255,255,255,0.2); 
+  border: 1px solid rgba(255,255,255,0.08); 
 }
 
 .user-avatar { 
   width: 40px; 
   height: 40px; 
   border-radius: 50%; 
-  border: 2px solid var(--irina-secondary); 
+  border: 2px solid var(--bluepos-secondary); 
   object-fit: cover;
 }
 
@@ -161,7 +157,7 @@
 }
 
 .logout-btn { 
-  background: #333; 
+  background: #1e293b; 
   color: white; 
   border: none; 
   padding: 8px 15px; 
