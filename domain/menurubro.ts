@@ -8,7 +8,7 @@ import {
   LucideIcon, 
   Package, 
   FlaskConical, 
-  Activity 
+  Wallet
 } from "lucide-react";
 
 export type menuitem = {
@@ -32,5 +32,6 @@ export const menurubro: Record<string, menuitem[]> = {
     { label: "stock", icon: Package, action: "stock" },
     { label: "clientes", icon: Users, action: "patients" },
     { label: "magistrales", icon: FlaskConical, action: "magistrates" },
+    { label: "caja", icon: Wallet, action: "cashbox" },
   ],
 };
