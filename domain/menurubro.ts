@@ -1,3 +1,4 @@
+// domain/menurubro.ts
 import { 
   LayoutGrid, 
   UtensilsCrossed, 
@@ -5,8 +6,8 @@ import {
   Users, 
   LibraryBig, 
   LucideIcon, 
-  Pill, 
-  Stethoscope, 
+  Package, 
+  FlaskConical, 
   Activity 
 } from "lucide-react";
 
@@ -28,8 +29,8 @@ export const menurubro: Record<string, menuitem[]> = {
     { label: "socios", icon: Users, action: "members" },
   ],
   farmaview: [
-    { label: "medicamentos", icon: Pill, action: "medicines" },
-    { label: "pacientes", icon: Stethoscope, action: "patients" },
-    { label: "historial", icon: Activity, action: "history" },
+    { label: "stock", icon: Package, action: "stock" },
+    { label: "clientes", icon: Users, action: "patients" },
+    { label: "magistrales", icon: FlaskConical, action: "magistrates" },
   ],
 };
