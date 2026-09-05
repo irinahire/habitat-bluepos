@@ -4,24 +4,24 @@
 
 @layer base {
   :root, .light {
-    --irina-primary: #bc8abf; /* Fucsia principal */
-    --irina-secondary: #96e8da; /* Turquesa secundario */
-    --irina-gradient: linear-gradient(to right, #bc8abf 0%, #96e8da 100%);
-    --btn-gradient: linear-gradient(to right, #bc8abf 0%, #96e8da 100%);
+    --irina-primary: #06b6d4; /* Cian eléctrico principal */
+    --irina-secondary: #8b5cf6; /* Violeta / Índigo secundario */
+    --irina-gradient: linear-gradient(to right, #06b6d4 0%, #8b5cf6 100%);
+    --btn-gradient: linear-gradient(to right, #06b6d4 0%, #8b5cf6 100%);
     --bg-surface: #ffffff;
     --text-main: #333333;
-    --border-input: #bc8abf;
+    --border-input: #06b6d4;
   }
 
   .dark {
-    /* Colores invertidos */
-    --irina-primary: #96e8da;
-    --irina-secondary: #bc8abf;
-    --irina-gradient: linear-gradient(to right, #96e8da 0%, #bc8abf 100%);
-    --btn-gradient: linear-gradient(to right, #96e8da 0%, #bc8abf 100%);
-    --bg-surface: #ffffff;
-    --text-main: #333333;
-    --border-input: #bc8abf;
+    /* Colores invertidos para modo oscuro */
+    --irina-primary: #22d3ee;
+    --irina-secondary: #a78bfa;
+    --irina-gradient: linear-gradient(to right, #22d3ee 0%, #a78bfa 100%);
+    --btn-gradient: linear-gradient(to right, #22d3ee 0%, #a78bfa 100%);
+    --bg-surface: #0f172a;
+    --text-main: #f8fafc;
+    --border-input: #334155;
   }
 }
 
@@ -59,7 +59,7 @@
 
 /* Sombra 3D sutil al hacer hover */
 .btn-wrapper:hover {
-  box-shadow: 0 8px 15px -4px rgba(188, 138, 195, 0.4);
+  box-shadow: 0 8px 15px -4px rgba(6, 182, 212, 0.4);
 }
 
 .btn-pub { 
