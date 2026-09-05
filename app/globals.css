@@ -179,3 +179,12 @@ html, body, #__next, main {
   background: linear-gradient(135deg, #059669 0%, #090d16 50%, #022c22 100%) !important;
   background-attachment: fixed !important;
 }
+
+/* Forzar un relleno oscuro sólido y elegante en las tarjetas del POS */
+.bg-card, 
+div[class*="rounded-xl"], 
+div[class*="rounded-2xl"],
+div[class*="border"] {
+  background-color: #0b0f19 !important;
+  backdrop-filter: none !important;
+}
