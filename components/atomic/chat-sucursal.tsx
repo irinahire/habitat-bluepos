@@ -2,14 +2,16 @@
 'use client';
 
 import { useState } from 'react';
+import { useHabitat } from '@/domain/habitatcontext';
 
 export default function ChatSucursal() {
+  const { activeModule } = useHabitat();
   const [isOpen, setIsOpen] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [mensaje, setMensaje] = useState('');
   const [mensajes, setMensajes] = useState([
     { remitente: 'sistema', texto: 'Bienvenido al chat de atención de la sucursal.' },
-    { remitente: 'cliente', texto: 'Hola, ¿tienen stock de ibuprofeno?' },
+    { remitente: 'cliente', texto: 'Hola, tengo una consulta sobre mi pedido.' },
   ]);
 
   const enviarMensaje = (e: React.FormEvent) => {
@@ -17,6 +19,62 @@ export default function ChatSucursal() {
     if (!mensaje.trim()) return;
     setMensajes([...mensajes, { remitente: 'negocio', texto: mensaje }]);
     setMensaje('');
+  };
+
+  // Renderizado condicional del panel de automatización según el módulo activo exacto
+  const renderModuleActions = () => {
+    if (activeModule === 'farmaview') {
+      return (
+        <div className="my-3 p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between">
+          <div>
+            <p className="text-xs font-bold text-indigo-400">Gestión Inteligente de Receta</p>
+            <p className="text-[11px] text-slate-400">El cliente adjuntó la documentación médica.</p>
+          </div>
+          <button 
+            onClick={() => alert("Procesando receta por IA, validando y generando ticket...")}
+            className="py-1.5 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition shadow"
+          >
+            Validar y Facturar (F8)
+          </button>
+        </div>
+      );
+    }
+
+    if (activeModule === 'restaurantview') {
+      return (
+        <div className="my-3 p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between">
+          <div>
+            <p className="text-xs font-bold text-orange-400">Gestión de Delivery / Pedidos</p>
+            <p className="text-[11px] text-slate-400">Verificar estado de envío y comandas.</p>
+          </div>
+          <button 
+            onClick={() => alert("Verificando estado del pedido en cocina y delivery...")}
+            className="py-1.5 px-3 rounded-lg bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold transition shadow"
+          >
+            Chequear Pedido
+          </button>
+        </div>
+      );
+    }
+
+    if (activeModule === 'libraryview') {
+      return (
+        <div className="my-3 p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between">
+          <div>
+            <p className="text-xs font-bold text-sky-400">Gestión de Encargos</p>
+            <p className="text-[11px] text-slate-400">Verificar disponibilidad de título o editorial.</p>
+          </div>
+          <button 
+            onClick={() => alert("Verificando disponibilidad en catálogo...")}
+            className="py-1.5 px-3 rounded-lg bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold transition shadow"
+          >
+            Consultar Título
+          </button>
+        </div>
+      );
+    }
+
+    return null;
   };
 
   if (!isOpen) {
@@ -33,7 +91,6 @@ export default function ChatSucursal() {
 
   return (
     <>
-      {/* Fondo oscuro de overlay cuando está en modo modal de pantalla completa */}
       {isFullScreen && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 transition-opacity" />
       )}
@@ -45,7 +102,7 @@ export default function ChatSucursal() {
             : 'bottom-4 right-4 w-80 md:w-96 h-[480px] rounded-2xl'
         }`}
       >
-        {/* Header del Chat */}
+        {/* Header */}
         <div className="flex items-center justify-between bg-[#111827] px-4 py-3 rounded-t-2xl border-b border-slate-800">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
@@ -72,26 +129,20 @@ export default function ChatSucursal() {
           </div>
         </div>
 
-        {/* Contenido (Burbuja vs Modal Completo) */}
+        {/* Cuerpo */}
         <div className="flex-1 flex overflow-hidden">
-          {/* Panel lateral de conversaciones si está en modal grande */}
           {isFullScreen && (
             <div className="w-1/3 border-r border-slate-800 p-4 bg-[#07090e] hidden md:flex md:flex-col overflow-y-auto">
               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Conversaciones Activas</h3>
               <div className="space-y-2">
                 <div className="p-3 rounded-xl bg-slate-800/60 border border-indigo-500/30 cursor-pointer">
                   <p className="text-sm font-semibold text-white">Juan Pérez</p>
-                  <p className="text-xs text-slate-400 truncate">Hola, ¿tienen stock de ibuprofeno?</p>
-                </div>
-                <div className="p-3 rounded-xl bg-slate-900/40 hover:bg-slate-800/40 cursor-pointer text-slate-400">
-                  <p className="text-sm font-semibold text-slate-300">María Gómez</p>
-                  <p className="text-xs truncate">Consulta sobre obra social...</p>
+                  <p className="text-xs text-slate-400 truncate">Consulta sobre estado de gestión...</p>
                 </div>
               </div>
             </div>
           )}
 
-          {/* Cuerpo principal de mensajes */}
           <div className="flex-1 flex flex-col justify-between p-4 bg-[#090d16] overflow-y-auto">
             <div className="space-y-3 overflow-y-auto flex-1 pr-2">
               {mensajes.map((m, idx) => (
@@ -116,23 +167,9 @@ export default function ChatSucursal() {
               ))}
             </div>
 
-            {/* Automatización de recetas (Solo visible en Modo Modal Pantalla Completa) */}
-            {isFullScreen && (
-              <div className="my-3 p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-bold text-indigo-400">Gestión Inteligente de Receta</p>
-                  <p className="text-[11px] text-slate-400">El cliente adjuntó la documentación médica.</p>
-                </div>
-                <button 
-                  onClick={() => alert("Procesando receta por IA, validando y generando ticket...")}
-                  className="py-1.5 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition shadow"
-                >
-                  Validar y Facturar (F8)
-                </button>
-              </div>
-            )}
+            {/* Automatización contextual según el módulo activo */}
+            {isFullScreen && renderModuleActions()}
 
-            {/* Formulario de envío */}
             <form onSubmit={enviarMensaje} className="mt-3 flex gap-2">
               <input
                 type="text"
