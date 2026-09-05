@@ -174,8 +174,8 @@ body {
   text-transform: uppercase;
 }
 
-/* Forzar el degradé en toda la raíz de la aplicación sin excepciones */
+/* Degradé de Verde esmeralda a Fondo oscuro clínico */
 html, body, #__next, main {
-  background: linear-gradient(135deg, #f97316 0%, #090d16 50%, #581c87 100%) !important;
+  background: linear-gradient(135deg, #059669 0%, #090d16 50%, #022c22 100%) !important;
   background-attachment: fixed !important;
 }
