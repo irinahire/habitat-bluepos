@@ -10,6 +10,7 @@
     --irina-gradient: linear-gradient(to right, #06b6d4 0%, #6366f1 100%);
     --btn-gradient: linear-gradient(to right, #06b6d4 0%, #6366f1 100%);
     
+    /* Forzamos que las tarjetas de Shadcn sean translúcidas para que se luzca el degradé */
     --card: 224 71% 6% / 0.75;
     --card-foreground: 213 31% 91%;
     --popover: 224 71% 6% / 0.9;
@@ -19,9 +20,9 @@
   }
 }
 
-/* Fondo general de la aplicación con la nueva atmósfera nocturna y sutiles matices */
+/* Fondo general de la aplicación con el degradé bien marcado */
 body {
-  background: linear-gradient(135deg, #090d16 0%, #0b0f19 50%, #111827 100%);
+  background: linear-gradient(135deg, #090d16 0%, #0f172a 50%, #1e1b4b 100%);
   color: #f8fafc;
   font-family: 'Inter', sans-serif;
   min-height: 100vh;
@@ -172,4 +173,18 @@ body {
   font-weight: 800; 
   cursor: pointer; 
   text-transform: uppercase;
+}
+
+/* FORZAR LA NUEVA PALETA Y TARJETAS UNIFICADAS */
+html, body, #__next, main {
+  background: linear-gradient(135deg, #090d16 0%, #0f172a 50%, #1e1b4b 100%) !important;
+  background-attachment: fixed !important;
+}
+
+.bg-card, 
+div[class*="rounded-xl"], 
+div[class*="rounded-2xl"],
+div[class*="border"] {
+  background-color: #0b0f19 !important;
+  backdrop-filter: none !important;
 }
