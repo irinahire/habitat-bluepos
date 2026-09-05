@@ -173,3 +173,9 @@ body {
   cursor: pointer; 
   text-transform: uppercase;
 }
+
+/* Forzar el degradé en toda la raíz de la aplicación sin excepciones */
+html, body,#__next, main {
+  background: linear-gradient(135deg, #090d16 0%, #06b6d4 50%, #6366f1 100%) !important;
+  background-attachment: fixed !important;
+}
