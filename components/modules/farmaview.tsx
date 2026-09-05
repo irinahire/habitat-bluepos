@@ -16,8 +16,29 @@ export function Farmaview() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState<any>(null);
 
+  // Lógica para agrupar productos idénticos incrementando su cantidad en lugar de duplicar filas
   const agregarAlCarrito = (producto: any) => {
-    setCart((prev) => [...prev, producto]);
+    setCart((prev) => {
+      const productoId = producto.id || producto.codigo || JSON.stringify(producto);
+      const indexExistente = prev.findIndex((item) => {
+        const itemId = item.id || item.codigo || JSON.stringify(item);
+        return itemId === productoId;
+      });
+
+      if (indexExistente >= 0) {
+        const nuevoCart = [...prev];
+        const itemActual = nuevoCart[indexExistente];
+        const cantidadActual = itemActual.cantidad || 1;
+        
+        nuevoCart[indexExistente] = {
+          ...itemActual,
+          cantidad: cantidadActual + 1
+        };
+        return nuevoCart;
+      } else {
+        return [...prev, { ...producto, cantidad: 1 }];
+      }
+    });
   };
 
   const handleValidateOS = () => {
@@ -26,10 +47,6 @@ export function Farmaview() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'F8') { 
-        e.preventDefault();
-        alert("Procesando pago..."); 
-      }
       if (e.key === 'b' && e.ctrlKey) {  
         e.preventDefault();
         document.getElementById("search-input")?.focus();  
@@ -75,7 +92,7 @@ export function Farmaview() {
           </div>
         </div>
 
-        {/* Columna Derecha: Panel de Cliente (en línea), Obra Social y Pago Puro */}
+        {/* Columna Derecha: Panel de Cliente, Obra Social y Resumen de Pago con Modal Interno */}
         <aside className="flex flex-col gap-4">
           <ClientPanel 
             selectedClient={selectedClient}
@@ -96,7 +113,9 @@ export function Farmaview() {
 
           <CheckoutSummary 
             cart={cart} 
-            onCheckout={() => alert("Cobro realizado con éxito")} 
+            obraSocial={obraSocial}
+            isValidatedOS={isValidatedOS}
+            onCheckoutComplete={() => setCart([])}
           />
         </aside>
       </div>
