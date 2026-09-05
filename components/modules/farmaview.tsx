@@ -14,6 +14,7 @@ export function Farmaview() {
   const [obraSocial, setObraSocial] = useState(""); 
   const [isValidatedOS, setIsValidatedOS] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedClient, setSelectedClient] = useState<any>(null);
 
   const agregarAlCarrito = (producto: any) => {
     setCart((prev) => [...prev, producto]);
@@ -23,7 +24,6 @@ export function Farmaview() {
     setIsValidatedOS(true);
   };
 
-  // Captura de atajos de teclado globales
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'F8') { 
@@ -47,7 +47,7 @@ export function Farmaview() {
     <div className="relative h-full p-4">
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 h-full">
         
-        {/* Columna Izquierda: Buscador Global Atómico y Grilla de Ítems */}
+        {/* Columna Izquierda: Buscador y Grilla del Carrito */}
         <div className="xl:col-span-2 space-y-4 flex flex-col h-full">
           <div className="flex items-center gap-3">
             <div className="flex-1">
@@ -75,20 +75,15 @@ export function Farmaview() {
           </div>
         </div>
 
-        {/* Columna Derecha: Componentes Modularizados */}
+        {/* Columna Derecha: Módulos Limpios y Desacoplados */}
         <aside className="flex flex-col gap-4">
-          {/* Panel de Datos del Cliente */}
+          {/* Panel de Cliente */}
           <ClientPanel 
-            obraSocial={obraSocial} 
-            setObraSocial={(val) => {
-              setObraSocial(val);
-              setIsValidatedOS(false);
-            }} 
-            onValidateOS={handleValidateOS}
-            isValidatedOS={isValidatedOS}
+            selectedClient={selectedClient}
+            onOpenClientModal={() => alert("Abrir modal de selección de cliente")}
           />
 
-          {/* Panel específico de Obra Social / Cobertura */}
+          {/* Panel Único de Obra Social */}
           <div className="bg-card border border-border rounded-xl p-4 shadow-lg">
             <ObraSocialPanel 
               obraSocial={obraSocial} 
@@ -101,7 +96,7 @@ export function Farmaview() {
             />
           </div>
 
-          {/* Checkout Summary Puro / Agnóstico */}
+          {/* Resumen de Pago Agnóstico */}
           <CheckoutSummary 
             cart={cart} 
             onCheckout={() => alert("Cobro realizado con éxito")} 
