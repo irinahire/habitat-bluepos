@@ -18,7 +18,6 @@ import { GlobalSearch } from "@/components/atomic/global-search";
 export function Header() {
   const { activeView, setActiveView, setActiveModule, activeModule } = useHabitat();
 
-  // Función segura para obtener el ícono del trigger
   const getIconForModule = (module: string) => {
     switch (module) {
       case 'restaurantview': return <Store className="size-4" />;
@@ -69,9 +68,11 @@ export function Header() {
         ))}
       </div>
 
-      {/* Buscador inteligente integrado en el centro */}
+      {/* Buscador inteligente integrado en el centro con ancho acotado */}
       <div className="flex-1 flex justify-center px-4">
-        <GlobalSearch />
+        <div className="w-full max-w-md">
+          <GlobalSearch />
+        </div>
       </div>
 
       {/* acciones */}
