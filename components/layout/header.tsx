@@ -3,7 +3,6 @@
 
 import { useHabitat } from "@/domain/habitatcontext";
 import Link from "next/link";
-import { ThemeSwitcher } from "@/components/theme-switcher";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,8 +33,6 @@ export function Header() {
         <Link href="/protected" className="font-bold text-lg text-primary leading-none">BluePOS</Link>
         <span className="text-[10px] text-muted-foreground uppercase tracking-wider">Blueprint Lab</span>
       </div>
-
-      <ThemeSwitcher />
 
       {/* selector de rubros */}
       <DropdownMenu>
