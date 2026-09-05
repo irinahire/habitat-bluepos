@@ -13,7 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Store, BookOpen, Pill } from "lucide-react";
 import { menurubro } from "@/domain/menurubro";
-import { GlobalSearch } from "@/components/header/global-search";
+import { GlobalSearch } from "@/components/atomic/global-search";
 
 export function Header() {
   const { activeView, setActiveView, setActiveModule, activeModule } = useHabitat();
