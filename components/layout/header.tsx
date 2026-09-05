@@ -56,20 +56,20 @@ export function Header() {
         </DropdownMenuContent>
       </DropdownMenu>
 
-     {/* menu contextual dinámico */}
-     <div className="flex items-center gap-2 border-l pl-6 border-border/50">
-       {activeModule && menurubro[activeModule]?.map((item) => (
-         <Button 
-           key={item.label} 
-           variant="ghost" 
-           size="sm" 
-           className="gap-2 text-xs capitalize bg-transparent hover:bg-white/10 text-muted-foreground hover:text-foreground border-0 shadow-none"
-         >
-       <item.icon className="size-3" /> {item.label}
-         </Button>
-      ))}
-    </div>
-
+{/* menu contextual dinámico */}
+<div className="flex items-center gap-4 border-l pl-6 border-border/50">
+  {activeModule && menurubro[activeModule]?.map((item) => (
+    <button
+      key={item.label}
+      type="button"
+      className="flex items-center gap-2 text-xs capitalize text-muted-foreground hover:text-foreground transition-colors bg-transparent border-0 cursor-pointer p-0"
+    >
+      <item.icon className="size-3.5" />
+      <span>{item.label}</span>
+    </button>
+  ))}
+</div>
+      
       {/* Buscador inteligente integrado en el centro con ancho acotado */}
       <div className="flex-1 flex justify-center px-4">
         <div className="w-full max-w-md">
