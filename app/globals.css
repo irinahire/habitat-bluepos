@@ -4,22 +4,28 @@
 
 @layer base {
   :root {
-    --bluepos-primary: #06b6d4;   /* Turquesa Brillante */
-    --bluepos-secondary: #6366f1; /* Índigo Espacial */
+    --bluepos-primary: #06b6d4;   
+    --bluepos-secondary: #6366f1; 
     --irina-gradient: linear-gradient(to right, #06b6d4 0%, #6366f1 100%);
     --btn-gradient: linear-gradient(to right, #06b6d4 0%, #6366f1 100%);
-    --bg-surface: #090d16;        /* Fondo oscuro profundo estilizado */
-    --text-main: #f8fafc;
-    --border-input: #1e293b;
+    
+    /* Forzamos que las tarjetas de Shadcn sean translúcidas para que se luzca el degradé */
+    --card: 224 71% 6% / 0.75;
+    --card-foreground: 213 31% 91%;
+    --popover: 224 71% 6% / 0.9;
+    --popover-foreground: 213 31% 91%;
+    
+    --border: 216 34% 20% / 0.5;
   }
 }
 
-/* Fondo general de la aplicación con sutil toque de profundidad */
+/* Fondo general de la aplicación con el degradé bien marcado */
 body {
-  background: radial-gradient(circle at top center, #0f172a 0%, #090d16 100%);
-  color: var(--text-main);
+  background: linear-gradient(135deg, #090d16 0%, #0f172a 50%, #1e1b4b 100%);
+  color: #f8fafc;
   font-family: 'Inter', sans-serif;
   min-height: 100vh;
+  background-attachment: fixed;
 }
 
 /* Animaciones */
@@ -97,7 +103,7 @@ body {
   font-weight: 700; 
   transition: 0.2s; 
   pointer-events: none; 
-  background: var(--bg-surface); 
+  background: #090d16; 
   padding: 0 4px; 
   font-size: 14px; 
 }
@@ -105,12 +111,12 @@ body {
 .input-group input { 
   width: 100%; 
   padding: 14px; 
-  border: 2px solid var(--border-input); 
+  border: 2px solid #1e293b; 
   border-radius: 10px; 
   outline: none; 
   font-size: 14px; 
-  color: var(--text-main); 
-  background: var(--bg-surface);
+  color: #f8fafc; 
+  background: #090d16;
   box-sizing: border-box; 
 }
 
