@@ -78,7 +78,15 @@ export function Farmaview() {
         {/* Columna Derecha: Componentes Modularizados */}
         <aside className="flex flex-col gap-4">
           {/* Panel de Datos del Cliente */}
-          <ClientPanel />
+          <ClientPanel 
+            obraSocial={obraSocial} 
+            setObraSocial={(val) => {
+              setObraSocial(val);
+              setIsValidatedOS(false);
+            }} 
+            onValidateOS={handleValidateOS}
+            isValidatedOS={isValidatedOS}
+          />
 
           {/* Panel específico de Obra Social / Cobertura */}
           <div className="bg-card border border-border rounded-xl p-4 shadow-lg">
