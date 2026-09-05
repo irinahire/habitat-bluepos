@@ -1,3 +1,4 @@
+// components/layout/header.tsx
 "use client";
 
 import { useHabitat } from "@/domain/habitatcontext";
@@ -12,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Store, BookOpen, Pill } from "lucide-react";
 import { menurubro } from "@/domain/menurubro";
+import { GlobalSearch } from "@/components/header/global-search";
 
 export function Header() {
   const { activeView, setActiveView, setActiveModule, activeModule } = useHabitat();
@@ -67,7 +69,10 @@ export function Header() {
         ))}
       </div>
 
-      <div className="flex-1" />
+      {/* Buscador inteligente integrado en el centro */}
+      <div className="flex-1 flex justify-center px-4">
+        <GlobalSearch />
+      </div>
 
       {/* acciones */}
       <div className="flex items-center gap-4">
