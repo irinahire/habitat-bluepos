@@ -56,14 +56,19 @@ export function Header() {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {/* menu contextual dinámico */}
-      <div className="flex items-center gap-2 border-l pl-6 border-border/50">
-        {activeModule && menurubro[activeModule]?.map((item) => (
-          <Button key={item.label} variant="ghost" size="sm" className="gap-2 text-xs capitalize">
-            <item.icon className="size-3" /> {item.label}
-          </Button>
-        ))}
-      </div>
+     {/* menu contextual dinámico */}
+     <div className="flex items-center gap-2 border-l pl-6 border-border/50">
+       {activeModule && menurubro[activeModule]?.map((item) => (
+         <Button 
+           key={item.label} 
+           variant="ghost" 
+           size="sm" 
+           className="gap-2 text-xs capitalize bg-transparent hover:bg-white/10 text-muted-foreground hover:text-foreground border-0 shadow-none"
+         >
+       <item.icon className="size-3" /> {item.label}
+         </Button>
+      ))}
+    </div>
 
       {/* Buscador inteligente integrado en el centro con ancho acotado */}
       <div className="flex-1 flex justify-center px-4">
