@@ -11,8 +11,11 @@ import { ExtendedSearchModal } from "@/components/atomic/extended-search-modal";
 import MagistralesView from "@/components/atomic/magistrales-view";
 import CashboxView from "@/components/atomic/cashbox-view";
 
-export function Farmaview() {
-  const [activeTab, setActiveTab] = useState<'pos' | 'magistrates' | 'stock' | 'patients' | 'cashbox'>('pos');
+interface FarmaviewProps {
+  activeTab?: string;
+}
+
+export function Farmaview({ activeTab = 'pos' }: FarmaviewProps) {
   const [cart, setCart] = useState<any[]>([]);
   const [obraSocial, setObraSocial] = useState(""); 
   const [isValidatedOS, setIsValidatedOS] = useState(false);
@@ -64,41 +67,7 @@ export function Farmaview() {
 
   return (
     <div className="relative h-full p-4 flex flex-col gap-4">
-      {/* Barra de solapas internas de Farmacia sincronizada con el menú superior */}
-      <div className="flex gap-2 border-b border-slate-800 pb-3">
-        <button 
-          onClick={() => setActiveTab('pos')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition ${activeTab === 'pos' ? 'bg-indigo-600 text-white' : 'bg-slate-900 text-slate-400 hover:text-white'}`}
-        >
-          Facturador POS
-        </button>
-        <button 
-          onClick={() => setActiveTab('magistrates')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition ${activeTab === 'magistrates' ? 'bg-indigo-600 text-white' : 'bg-slate-900 text-slate-400 hover:text-white'}`}
-        >
-          Magistrales
-        </button>
-        <button 
-          onClick={() => setActiveTab('stock')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition ${activeTab === 'stock' ? 'bg-indigo-600 text-white' : 'bg-slate-900 text-slate-400 hover:text-white'}`}
-        >
-          Stock
-        </button>
-        <button 
-          onClick={() => setActiveTab('patients')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition ${activeTab === 'patients' ? 'bg-indigo-600 text-white' : 'bg-slate-900 text-slate-400 hover:text-white'}`}
-        >
-          Clientes / Pacientes
-        </button>
-        <button 
-          onClick={() => setActiveTab('cashbox')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition ${activeTab === 'cashbox' ? 'bg-indigo-600 text-white' : 'bg-slate-900 text-slate-400 hover:text-white'}`}
-        >
-          Caja
-        </button>
-      </div>
-
-      {/* Renderizado condicional según la solapa activa */}
+      {/* Renderizado condicional según la opción seleccionada en el menú superior */}
       {activeTab === 'magistrates' ? (
         <MagistralesView />
       ) : activeTab === 'stock' ? (
