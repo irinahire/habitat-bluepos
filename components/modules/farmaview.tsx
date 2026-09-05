@@ -75,15 +75,13 @@ export function Farmaview() {
           </div>
         </div>
 
-        {/* Columna Derecha: Módulos Limpios y Desacoplados */}
+        {/* Columna Derecha: Panel de Cliente (en línea), Obra Social y Pago Puro */}
         <aside className="flex flex-col gap-4">
-          {/* Panel de Cliente */}
           <ClientPanel 
             selectedClient={selectedClient}
-            onOpenClientModal={() => alert("Abrir modal de selección de cliente")}
+            onSelectClient={setSelectedClient}
           />
 
-          {/* Panel Único de Obra Social */}
           <div className="bg-card border border-border rounded-xl p-4 shadow-lg">
             <ObraSocialPanel 
               obraSocial={obraSocial} 
@@ -96,7 +94,6 @@ export function Farmaview() {
             />
           </div>
 
-          {/* Resumen de Pago Agnóstico */}
           <CheckoutSummary 
             cart={cart} 
             onCheckout={() => alert("Cobro realizado con éxito")} 
