@@ -43,7 +43,7 @@ export function Hero() {
         </p>
         
         <h2 className="text-2xl md:text-3xl font-extralight tracking-tight text-foreground/80 max-w-xl">
-          El sistema de gestión modular de alta velocidad diseñado exclusivamente para farmacias modernas.
+          El sistema de gestión modular de alta velocidad diseñado exclusivamente para comercios modernos.
         </h2>
         
         {/* Botones de Acción: Coordinar Demostración y Contratar BluePOS */}
