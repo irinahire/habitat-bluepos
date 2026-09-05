@@ -1,3 +1,4 @@
+// app/protected/layout.tsx
 import { HabitatProvider } from "@/domain/habitatcontext";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -8,13 +9,11 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
   return (
     <HabitatProvider>
       <main className="min-h-screen flex flex-col relative">
-        {/* Espacio para el Login - Flotante arriba a la derecha */}
+        {/* Espacio para el Login - Flotante arriba a la derecha sin marco contenedor adicional */}
         <div className="absolute top-4 right-4 z-50">
-          <div className="bg-card/80 backdrop-blur-md border border-border px-4 py-2 rounded-full shadow-lg flex items-center">
-            <Suspense fallback={<div className="w-20 h-6 animate-pulse bg-secondary rounded" />}>
-              <AuthButton />
-            </Suspense>
-          </div>
+          <Suspense fallback={<div className="w-20 h-6 animate-pulse bg-secondary rounded" />}>
+            <AuthButton />
+          </Suspense>
         </div>
 
         <Header />
