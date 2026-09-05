@@ -39,7 +39,7 @@ export function Hero() {
         <div className="h-px w-24 bg-emerald-500/20" />
         
         <p className="text-[10px] tracking-[0.8em] uppercase font-medium text-emerald-500/50">
-          BluePOS Pharmacy Ecosystem
+          BluePOS Integrations Lab
         </p>
         
         <h2 className="text-2xl md:text-3xl font-extralight tracking-tight text-foreground/80 max-w-xl">
