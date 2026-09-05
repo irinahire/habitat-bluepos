@@ -8,8 +8,8 @@ import { Suspense } from "react";
 export default function ProtectedLayout({ children }: { children: React.ReactNode }) {
   return (
     <HabitatProvider>
-      <main className="min-h-screen flex flex-col relative">
-        {/* Espacio para el Login - Flotante arriba a la derecha sin marco contenedor adicional */}
+      <main className="min-h-screen flex flex-col relative bg-[radial-gradient(circle_at_top_center,#0f172a_0%,#090d16_100%)] text-slate-100">
+        {/* Espacio para el Login - Flotante arriba a la derecha */}
         <div className="absolute top-4 right-4 z-50">
           <Suspense fallback={<div className="w-20 h-6 animate-pulse bg-secondary rounded" />}>
             <AuthButton />
