@@ -1,11 +1,12 @@
+/* app/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --bluepos-primary: #06b6d4;   
-    --bluepos-secondary: #6366f1; 
+    --bluepos-primary: #06b6d4;    
+    --bluepos-secondary: #6366f1;  
     --irina-gradient: linear-gradient(to right, #06b6d4 0%, #6366f1 100%);
     --btn-gradient: linear-gradient(to right, #06b6d4 0%, #6366f1 100%);
     
