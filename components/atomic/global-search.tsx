@@ -8,7 +8,7 @@ import { useHabitat } from "@/domain/habitatcontext";
 interface GlobalSearchProps {
   onSelect?: (item: any) => void;
   placeholder?: string;
-  id?: string; // <-- Agregado aquí
+  id?: string;
 }
 
 export function GlobalSearch({ onSelect, placeholder, id }: GlobalSearchProps) {
@@ -16,14 +16,13 @@ export function GlobalSearch({ onSelect, placeholder, id }: GlobalSearchProps) {
   const [results, setResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   
-  const { activeModule } = useHabitat();
+  // Extraemos la configuración del dominio actual desde el contexto global
+  const { currentDomainConfig } = useHabitat();
   const supabase = createClient();
 
+  // Obtenemos el tipo de búsqueda de forma dinámica desde los metadatos del dominio
   const getTargetTipo = () => {
-    if (activeModule === 'libraryview') return '!libro';
-    if (activeModule === 'restaurantview') return '!plato';
-    if (activeModule === 'farmaview') return '!medicamento';
-    return null;
+    return currentDomainConfig?.searchType || null;
   };
 
   const handleSearch = async (searchTerm: string) => {
@@ -63,7 +62,7 @@ export function GlobalSearch({ onSelect, placeholder, id }: GlobalSearchProps) {
       <div className="relative flex items-center">
         <span className="absolute left-3 text-emerald-500 text-sm">🔍</span>
         <input
-          id={id} // <-- Pasado al input nativo
+          id={id}
           type="text"
           value={query}
           onChange={(e) => handleSearch(e.target.value)}
