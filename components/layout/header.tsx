@@ -24,21 +24,16 @@ export function Header() {
     setActiveSubAction 
   } = useHabitat();
 
-  // Obtenemos la configuración del dominio activo actual
   const currentDomain = activeModule ? HABITAT_DOMAINS[activeModule] : null;
-
-  // Icono dinámico para el dropdown principal basado en el registro
   const DomainIcon = currentDomain?.icon;
 
   return (
     <header className="w-full border-b border-border p-4 bg-card/80 backdrop-blur-md flex items-center gap-6">
-      {/* marca */}
       <div className="flex flex-col">
         <Link href="/protected" className="font-bold text-lg text-primary leading-none">BluePOS</Link>
         <span className="text-[10px] text-muted-foreground uppercase tracking-wider">Blueprint Lab</span>
       </div>
 
-      {/* selector de rubros dinámico */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="secondary" className="gap-2 capitalize">
@@ -65,7 +60,6 @@ export function Header() {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {/* menú contextual dinámico basado en subActions del dominio */}
       <div className="flex items-center gap-3 pl-6 border-l border-border/50 bg-transparent">
         {currentDomain && Object.entries(currentDomain.subActions).map(([actionKey, subAction]) => {
           const Icon = subAction.icon;
@@ -89,14 +83,12 @@ export function Header() {
         })}
       </div>
       
-      {/* buscador inteligente integrado */}
       <div className="flex-1 flex justify-center px-4">
         <div className="w-full max-w-md">
           <GlobalSearch />
         </div>
       </div>
 
-      {/* acciones */}
       <div className="flex items-center gap-4">
         {activeView !== 'billing' && (
           <Button onClick={() => setActiveView('billing')} className="font-bold">
