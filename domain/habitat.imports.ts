@@ -1,4 +1,4 @@
-// domain/habitat.imports.ts (añadir la línea de petshopview)
+// domain/habitat.imports.ts
 import dynamic from 'next/dynamic';
 
 export const MODULE_IMPORTS: Record<string, React.ComponentType<any>> = {
@@ -6,4 +6,5 @@ export const MODULE_IMPORTS: Record<string, React.ComponentType<any>> = {
   libraryview: dynamic(() => import("@/components/modules/libraryview").then(mod => mod.LibraryView)),
   farmaview: dynamic(() => import("@/components/modules/farmaview").then(mod => mod.Farmaview)),
   petshopview: dynamic(() => import("@/components/modules/petshopview").then(mod => mod.PetShopView)),
+  dieteticaview: dynamic(() => import("@/components/modules/dieteticaview").then(mod => mod.DieteticaView)),
 };
