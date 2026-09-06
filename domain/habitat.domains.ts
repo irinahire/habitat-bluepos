@@ -8,6 +8,9 @@ import {
   Package, 
   FlaskConical, 
   Wallet,
+  Dog,
+  Stethoscope,
+  Scissors,
   LucideIcon 
 } from "lucide-react";
 
@@ -62,12 +65,9 @@ export const HABITAT_DOMAINS: Record<string, DomainConfig> = {
       cashbox: { label: "caja", component: "CashboxView", icon: Wallet, roles: ["none"] },
     },
   },
-
-
-// domain/habitat.domains.ts (añadir este bloque)
   petshopview: {
     label: "Pet Shop",
-    icon: Dog, // Asegurate de importar Dog desde "lucide-react"
+    icon: Dog,
     defaultAction: "pos",
     roles: ["none"],
     subActions: {
@@ -77,4 +77,4 @@ export const HABITAT_DOMAINS: Record<string, DomainConfig> = {
       grooming: { label: "peluquería", component: "GroomingView", icon: Scissors, roles: ["none"] },
     },
   },
-  };
+};
