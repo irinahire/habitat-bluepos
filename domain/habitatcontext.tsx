@@ -10,7 +10,6 @@ export function HabitatProvider({ children }: { children: React.ReactNode }) {
   const [activeModule, setActiveModule] = useState<string | null>(null);
   const [activeSubAction, setActiveSubAction] = useState<string>('pos');
 
-  // Helper para obtener la configuración del dominio actual de manera limpia
   const currentDomainConfig = activeModule ? HABITAT_DOMAINS[activeModule] : null;
 
   return (
