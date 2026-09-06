@@ -62,4 +62,19 @@ export const HABITAT_DOMAINS: Record<string, DomainConfig> = {
       cashbox: { label: "caja", component: "CashboxView", icon: Wallet, roles: ["none"] },
     },
   },
-};
+
+
+// domain/habitat.domains.ts (añadir este bloque)
+  petshopview: {
+    label: "Pet Shop",
+    icon: Dog, // Asegurate de importar Dog desde "lucide-react"
+    defaultAction: "pos",
+    roles: ["none"],
+    subActions: {
+      pos: { label: "facturador", component: "PetPosView", icon: Wallet, roles: ["none"] },
+      stock: { label: "stock", component: "PetStockView", icon: Package, roles: ["none"] },
+      vet: { label: "veterinaria", component: "VetView", icon: Stethoscope, roles: ["none"] },
+      grooming: { label: "peluquería", component: "GroomingView", icon: Scissors, roles: ["none"] },
+    },
+  },
+  };
