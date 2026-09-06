@@ -15,7 +15,7 @@ export type SubActionConfig = {
   label: string;
   component: string;
   icon: LucideIcon;
-  roles: string[]; // Ej: ['admin', 'cashier', 'none']
+  roles: string[];
 };
 
 export type DomainConfig = {
