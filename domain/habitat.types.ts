@@ -15,3 +15,13 @@ export type DomainConfig = {
   roles: string[];
   subActions: Record<string, SubActionConfig>;
 };
+
+// Tipo para el nodo de identidad / sucursal que maneja el servicio y el browser
+export type HabitatNode = {
+  id: string;
+  name: string;
+  domain: string;
+  metadata?: Record<string, any>;
+  roles?: string[];
+  [key: string]: any;
+};
