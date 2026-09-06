@@ -11,6 +11,7 @@ import {
   Dog,
   Stethoscope,
   Scissors,
+  Sprout,
   LucideIcon 
 } from "lucide-react";
 
@@ -75,6 +76,18 @@ export const HABITAT_DOMAINS: Record<string, DomainConfig> = {
       stock: { label: "stock", component: "PetStockView", icon: Package, roles: ["none"] },
       vet: { label: "veterinaria", component: "VetView", icon: Stethoscope, roles: ["none"] },
       grooming: { label: "peluquería", component: "GroomingView", icon: Scissors, roles: ["none"] },
+    },
+  },
+  dieteticaview: {
+    label: "Dietética",
+    icon: Sprout,
+    defaultAction: "pos",
+    roles: ["none"],
+    subActions: {
+      pos: { label: "facturador", component: "DieteticaPosView", icon: Wallet, roles: ["none"] },
+      stock: { label: "stock", component: "DieteticaStockView", icon: Package, roles: ["none"] },
+      clients: { label: "clientes", component: "ClientPanel", icon: Users, roles: ["none"] },
+      cashbox: { label: "caja", component: "CashboxView", icon: Wallet, roles: ["none"] },
     },
   },
 };
