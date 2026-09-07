@@ -22,6 +22,10 @@ export function Farmaview({ activeTab = 'pos' }: FarmaviewProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState<any>(null);
 
+  // Estados para los nuevos modales discretos de Cliente y Obra Social
+  const [isClientModalOpen, setIsClientModalOpen] = useState(false);
+  const [isOsModalOpen, setIsOsModalOpen] = useState(false);
+
   const agregarAlCarrito = (producto: any) => {
     setCart((prev) => {
       const productoId = producto.id || producto.codigo || JSON.stringify(producto);
@@ -48,6 +52,7 @@ export function Farmaview({ activeTab = 'pos' }: FarmaviewProps) {
 
   const handleValidateOS = () => {
     setIsValidatedOS(true);
+    setIsOsModalOpen(false);
   };
 
   useEffect(() => {
@@ -60,6 +65,15 @@ export function Farmaview({ activeTab = 'pos' }: FarmaviewProps) {
         e.preventDefault();
         setIsModalOpen(prev => !prev);
       }
+      // Atajos rápidos nuevos para cliente (F2) y obra social (F3)
+      if (e.key === 'F2') {
+        e.preventDefault();
+        setIsClientModalOpen(prev => !prev);
+      }
+      if (e.key === 'F3') {
+        e.preventDefault();
+        setIsOsModalOpen(prev => !prev);
+      }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
@@ -67,7 +81,6 @@ export function Farmaview({ activeTab = 'pos' }: FarmaviewProps) {
 
   return (
     <div className="relative h-full p-4 flex flex-col gap-4">
-      {/* Renderizado condicional según la opción seleccionada en el menú superior */}
       {activeTab === 'magistrates' ? (
         <MagistralesView />
       ) : activeTab === 'stock' ? (
@@ -112,40 +125,99 @@ export function Farmaview({ activeTab = 'pos' }: FarmaviewProps) {
             </div>
           </div>
 
-          {/* Columna Derecha: Panel de Cliente, Obra Social y Resumen de Pago */}
+          {/* Columna Derecha: Exclusiva para el Resumen del Facturador, con leyendas discretas arriba */}
           <aside className="flex flex-col gap-4">
-            <ClientPanel 
-              selectedClient={selectedClient}
-              onSelectClient={setSelectedClient}
-            />
-
-            <div className="bg-card border border-border rounded-xl p-4 shadow-lg">
-              <ObraSocialPanel 
-                obraSocial={obraSocial} 
-                setObraSocial={(val) => {
-                  setObraSocial(val);
-                  setIsValidatedOS(false);
-                }} 
-                onValidate={handleValidateOS}
-                isValidated={isValidatedOS}
-              />
+            {/* Leyenda discreta de Cliente (F2) */}
+            <div 
+              onClick={() => setIsClientModalOpen(true)}
+              className="bg-slate-900/60 hover:bg-slate-900 border border-slate-800/80 rounded-xl px-4 py-3 cursor-pointer transition flex items-center justify-between text-xs text-slate-400 group shadow-sm"
+            >
+              <div>
+                <span className="text-[10px] uppercase font-bold text-slate-500 block">Cliente (F2)</span>
+                <span className="text-white font-medium">
+                  {selectedClient?.nombre || selectedClient?.name || "Consumidor Final"}
+                </span>
+              </div>
+              <span className="text-emerald-400 opacity-60 group-hover:opacity-100 transition text-[11px]">Cambiar ⚙️</span>
             </div>
 
+            {/* Leyenda discreta de Obra Social (F3) */}
+            <div 
+              onClick={() => setIsOsModalOpen(true)}
+              className="bg-slate-900/60 hover:bg-slate-900 border border-slate-800/80 rounded-xl px-4 py-3 cursor-pointer transition flex items-center justify-between text-xs text-slate-400 group shadow-sm"
+            >
+              <div>
+                <span className="text-[10px] uppercase font-bold text-slate-500 block">Obra Social / Cobertura (F3)</span>
+                <span className={`font-medium ${isValidatedOS ? 'text-emerald-400' : 'text-white'}`}>
+                  {obraSocial ? `${obraSocial.toUpperCase()} ${isValidatedOS ? '✓ (Validada)' : '(Sin validar)'}` : "Particular / Ninguna"}
+                </span>
+              </div>
+              <span className="text-emerald-400 opacity-60 group-hover:opacity-100 transition text-[11px]">Gestionar 🛡️</span>
+            </div>
+
+            {/* Columna dedicada únicamente al Resumen del Facturador */}
             <CheckoutSummary 
               cart={cart} 
               obraSocial={obraSocial}
               isValidatedOS={isValidatedOS}
-              onCheckoutComplete={() => setCart([])}
+              onCheckoutComplete={() => {
+                setCart([]);
+                setSelectedClient(null);
+                setObraSocial("");
+                setIsValidatedOS(false);
+              }}
             />
           </aside>
         </div>
       )}
 
+      {/* Modal Búsqueda Extendida (F9) */}
       <ExtendedSearchModal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
         onSelect={agregarAlCarrito} 
       />
+
+      {/* Modal Selector de Cliente (F2) */}
+      {isClientModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-md p-6 shadow-2xl space-y-4">
+            <div className="flex justify-between items-center border-b border-slate-800 pb-3">
+              <h3 className="text-sm font-bold text-white uppercase tracking-wider">Seleccionar Cliente (F2)</h3>
+              <button onClick={() => setIsClientModalOpen(false)} className="text-slate-400 hover:text-white text-xs">✕ Cerrar</button>
+            </div>
+            <div className="py-2">
+              <ClientPanel 
+                selectedClient={selectedClient}
+                onSelectClient={(client) => {
+                  setSelectedClient(client);
+                  setIsClientModalOpen(false);
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Validador de Obra Social (F3) */}
+      {isOsModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-md p-6 shadow-2xl space-y-4">
+            <div className="flex justify-between items-center border-b border-slate-800 pb-3">
+              <h3 className="text-sm font-bold text-white uppercase tracking-wider">Validación de Obra Social (F3)</h3>
+              <button onClick={() => setIsOsModalOpen(false)} className="text-slate-400 hover:text-white text-xs">✕ Cerrar</button>
+            </div>
+            <div className="py-2">
+              <ObraSocialPanel 
+                obraSocial={obraSocial} 
+                setObraSocial={setObraSocial} 
+                onValidate={handleValidateOS}
+                isValidated={isValidatedOS}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
