@@ -16,9 +16,18 @@ export function GlobalSearch({ onSelect, placeholder, id }: GlobalSearchProps) {
   const [results, setResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   
-  // Tomamos directamente el módulo activo del contexto del hábitat
-  const { activeModule } = useHabitat();
+  // Extraemos la configuración del dominio activo de forma 100% dinámica.
+  // Esto evita cualquier "if" o mapeo rígido: si agregás un nuevo rubro en los dominios,
+  // el buscador lo toma automáticamente sin tocar este componente.
+  const { currentDomainConfig } = useHabitat();
   const supabase = createClient();
+
+  // Función totalmente agnóstica que deriva el rubro actual directamente de la metadata del dominio.
+  const getTargetRubro = () => {
+    // Si el dominio define una etiqueta (ej: "Restaurante", "Farmacia"), 
+    // la pasamos a minúsculas para que coincida exactamente con el campo 'rubro' de la base de datos.
+    return currentDomainConfig?.label ? currentDomainConfig.label.toLowerCase() : null;
+  };
 
   const handleSearch = async (searchTerm: string) => {
     setQuery(searchTerm);
@@ -29,10 +38,11 @@ export function GlobalSearch({ onSelect, placeholder, id }: GlobalSearchProps) {
 
     setLoading(true);
     try {
-      // Pasamos el activeModule tal cual para que el backend resuelva el contexto del tenant/rubro
+      // Llamada a la función RPC actualizada en Supabase ("search_habitat"),
+      // enviando el término de búsqueda y el rubro dinámico extraído del dominio activo.
       const { data, error } = await supabase.rpc('search_habitat', {
         search_query: searchTerm,
-        target_tipo: activeModule, 
+        target_rubro: getTargetRubro(), 
         match_count: 5
       });
 
