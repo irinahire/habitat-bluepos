@@ -37,7 +37,7 @@ export function CheckoutSummary({ cart, onCheckoutComplete, obraSocial, isValida
       <div className="bg-card border border-border rounded-xl p-4 flex flex-col justify-between shadow-lg space-y-4">
         <div>
           <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Resumen del Ticket</h4>
-          <div className="max-h-40 overflow-y-auto space-y-2 pr-1">
+          <div className="space-y-2">
             {cart.length === 0 ? (
               <p className="text-xs text-slate-500 italic py-2">Sin ítems en el ticket actual...</p>
             ) : (
