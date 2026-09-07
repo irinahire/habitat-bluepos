@@ -107,7 +107,7 @@ export function Farmaview({ activeTab = 'pos' }: FarmaviewProps) {
               </button>
             </div>
 
-            <div className="flex-1 flex flex-col">
+            <div className="w-full">
               <CartTable cart={cart} />
             </div>
           </div>
