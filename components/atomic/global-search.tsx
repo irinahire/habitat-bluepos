@@ -16,12 +16,12 @@ export function GlobalSearch({ onSelect, placeholder, id }: GlobalSearchProps) {
   const [results, setResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   
-  // Extraemos la configuración del dominio activo directamente del contexto centralizado.
-  // Cero hardcodeo: el componente no conoce nombres de rubros específicos.
+  // Extraemos la configuración del dominio activo de forma 100% dinámica.
+  // Cero hardcodeo: el componente consulta la fuente centralizada.
   const { currentDomainConfig } = useHabitat();
   const supabase = createClient();
 
-  // Función agnóstica que obtiene el rubro actual a partir de la etiqueta configurada en el dominio.
+  // Función agnóstica que deriva el rubro actual directamente de la metadata del dominio.
   const getTargetRubro = () => {
     return currentDomainConfig?.label ? currentDomainConfig.label.toLowerCase() : null;
   };
@@ -35,12 +35,12 @@ export function GlobalSearch({ onSelect, placeholder, id }: GlobalSearchProps) {
 
     setLoading(true);
     try {
-      // Llamada RPC a Supabase filtrando de forma quirúrgica por el servicio 'bluepos' 
-      // y el rubro dinámico del dominio activo.
+      // Ampliamos el match_count a 10 para garantizar que letras cortas 
+      // o términos generales no dejen productos afuera del dropdown.
       const { data, error } = await supabase.rpc('search_habitat', {
         search_query: searchTerm,
         target_rubro: getTargetRubro(), 
-        match_count: 5
+        match_count: 10
       });
 
       if (error) throw error;
