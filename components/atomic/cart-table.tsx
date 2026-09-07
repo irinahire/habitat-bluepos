@@ -9,7 +9,7 @@ export function CartTable({ cart }: CartTableProps) {
   return (
     <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 h-[calc(100%-80px)] overflow-y-auto">
       <table className="w-full text-left text-sm text-slate-300">
-        <thead className="text-emerald-500 uppercase border-b border-slate-800 sticky top-0 bg-slate-900 z-10">
+        <thead className="text-emerald-500 uppercase border-b border-slate-800">
           <tr>
             <th className="pb-3">Producto</th>
             <th className="pb-3 text-center">Cant (Shift+Num=Frac)</th>
