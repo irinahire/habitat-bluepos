@@ -16,14 +16,9 @@ export function GlobalSearch({ onSelect, placeholder, id }: GlobalSearchProps) {
   const [results, setResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   
-  // Extraemos la configuración del dominio actual desde el contexto global
-  const { currentDomainConfig } = useHabitat();
+  // Tomamos directamente el módulo activo del contexto del hábitat
+  const { activeModule } = useHabitat();
   const supabase = createClient();
-
-  // Obtenemos el tipo de búsqueda de forma dinámica desde los metadatos del dominio
-  const getTargetTipo = () => {
-    return currentDomainConfig?.searchType || null;
-  };
 
   const handleSearch = async (searchTerm: string) => {
     setQuery(searchTerm);
@@ -34,9 +29,10 @@ export function GlobalSearch({ onSelect, placeholder, id }: GlobalSearchProps) {
 
     setLoading(true);
     try {
+      // Pasamos el activeModule tal cual para que el backend resuelva el contexto del tenant/rubro
       const { data, error } = await supabase.rpc('search_habitat', {
         search_query: searchTerm,
-        target_tipo: getTargetTipo(),
+        target_tipo: activeModule, 
         match_count: 5
       });
 
